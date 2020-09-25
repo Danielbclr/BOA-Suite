@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="credit_SPC">
+      <implementation-class>services.credit_SPC</implementation-class>
+    </service>
+    <service name="credit_SERASA">
+      <implementation-class>services.credit_SERASA</implementation-class>
+    </service>
+    <service name="deliver_Correios">
+      <implementation-class>services.deliver_Correios</implementation-class>
+    </service>
+    <service name="deliver_dhl">
+      <implementation-class>services.deliver_dhl</implementation-class>
+    </service>
+  </services>
+  <clients/>
+  <jsr109>false</jsr109>
+</jax-ws>

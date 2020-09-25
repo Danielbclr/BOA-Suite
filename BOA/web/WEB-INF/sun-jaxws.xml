@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
+  <endpoint implementation="services.credit_SPC" name="credit_SPC" url-pattern="/credit_SPC"/>
+  <endpoint implementation="services.credit_SERASA" name="credit_SERASA" url-pattern="/credit_SERASA"/>
+  <endpoint implementation="services.deliver_Correios" name="deliver_Correios" url-pattern="/deliver_Correios"/>
+  <endpoint implementation="services.deliver_dhl" name="deliver_dhl" url-pattern="/deliver_dhl"/>
+</endpoints>
