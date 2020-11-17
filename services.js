@@ -8,7 +8,7 @@ var services = [
     },
     {
         service_id: "0",
-        name: "DHL",
+        name: "Batata",
         description: "Entregar produto",
         author: "Luciane Meconi",
         wsdl: "http://localhost:8084/BOA/deliver_dhl?wsdl"

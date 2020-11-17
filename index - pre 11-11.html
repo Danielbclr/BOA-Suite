@@ -103,12 +103,19 @@
 	    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
 	  </div>
 	  <div class="custom-file">
+	  	<!--
+	    <input type="file" class="custom-file-input" id="novo-modelo" aria-describedby="inputGroupFileAddon01" accept=".xpdl">
+	    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+	-->
 	    <form id="xmlForm" name="xmlForm">
-        	<input id="input" type="file" accept=".xpdl"> <input type="submit">
+        	<input id="input" type="file"> <input type="submit">
     	</form>
 	  </div>
 	</div>
 
+<!--
+	<input type="file" id="novo-modelo" accept=".xpdl">
+-->
 	<script>
 	  const fileSelector = document.getElementById('file');
 	  fileSelector.addEventListener('change', (event) => {
@@ -116,7 +123,36 @@
 	    console.log(fileList);
 	  });
 	</script>
+<!--
+	<script type="text/javascript">
+		var xmlF = document.getElementById('novo-modelo');
 
+		function parseTextAsXml(text) {
+		    var parser = new DOMParser(),
+		        xmlDom = parser.parseFromString(text, "text/xml");
+
+		    //now, extract items from xmlDom and assign to appropriate text input fields
+		}
+
+		function waitForTextReadComplete(reader) {
+		    reader.onloadend = function(event) {
+		        var text = event.target.result;
+
+		        parseTextAsXml(text);
+		    }
+		}
+
+		function handleFileSelection() {
+		    var file = xmlF.files[0],
+		        reader = new FileReader();
+
+		    waitForTextReadComplete(reader);
+		    reader.readAsText(file);
+		}
+
+		fileChooser.addEventListener('change', handleFileSelection, false);
+	</script>
+-->
 	<script>
        var readXml=null;
        $('#xmlForm').submit(function(event) {
@@ -142,11 +178,10 @@
                console.log(nodes[0]);
                console.log(nodes[0].getAttribute("Id"));
 //
-			   console.log(process.length + 1)
                var novoModelo=
                {
 			        header: {
-			            process_id: String(process.length + 1),
+			            process_id: "2",
 			            name: fileName,
 			            description: "Diagrama 1",
 			            author: "Luciane Meconi",
@@ -158,63 +193,107 @@
 	                id: "",
 	                name: "",
 	                boa: false
-	            };
-
-	            for( let i = 0; i < nodes.length; i++){
-	            	var n = nodes[i];
-
-	            	if(n.getAttribute("Name") != ""){
-		            	step.id = n.getAttribute("Id");
-		            	step.name = n.getAttribute("Name");
-
-		            	console.log(i);
-		            	console.log(step.id);
-		            	console.log(step.name);
-
-		            	novoModelo.steps.push({
-			                id: n.getAttribute("Id"),
-			                name: n.getAttribute("Name"),
-			                boa: false
-			            }
-		            	);
-
-		            	//console.log(step);
-
-		            	console.log(novoModelo.steps[i]);
-		            	console.log(novoModelo);
-		            	console.log("================");
-		            }
-
 	            }
 
-	            console.log("Finalizou parse");
+	            for( )
+//*/
+               /*
+               var nsResolver = document.createNSResolver( doc.ownerDocument == null ? doc.documentElement : doc.ownerDocument.documentElement);
 
-	            console.log(novoModelo);
-	            console.log(process[0]);
+               var path = "//Participant"
+               var activities = doc.evaluate(path, document , nsResolver, XPathResult.ANY_TYPE, null);
 
-	            process.push(novoModelo);
+			   var node = activities.iterateNext();
 
-	            console.log(novoModelo);
+			   console.log(activities);
+			   console.log(node);
 
-              	alert("Publicando processos");
+			   node = activities.iterateNext();
+			   console.log(node);
 
-              	//console.log(process[5].header.name);
+			   //console.log(node.getAttribute("Name"));
 
-	            clearBoard();
-	            clearDiscover();
+			   console.log("Imprimindo atividade");
 
-	            populateWithProcesses();
-
-	            //*/
+				while(node){
+					console.log("Imprimindo atividadeasdasddas");
+					console.log(node.getAttribute("Name"));
+					node = activities.iterateNext();
+	      		}
+	      		*/
 
            }
            reader.readAsText(selectedFile);
 
        });
-
-       
-
     </script>
+
+	<script>
+		/*
+      const status = document.getElementById('status');
+      const output = document.getElementById('output');
+      if (window.FileList && window.File && window.FileReader) {
+        document.getElementById('novo-modelo').addEventListener('change', event => {
+
+			var file = event.target.files[0];
+
+			//var xpdlFile = XMLDocument.load(file)
+			const parser = new DOMParser();
+
+			const reader = new FileReader();
+
+			/*
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+			    if (this.readyState == 4 && this.status == 200) {
+			        xml = xhttp.responseXM;
+			        var nsResolver = xml.createNSResolver( xml.documentElement );
+
+					var activities = xml.evaluate("//Activity", xml , null, XPathResult.ANY_TYPE, null);
+
+					var node = activities.iterateNext();
+
+					console.log("Imprimindo atividade");
+
+					while(node){
+						console.log("Imprimindo atividade");
+						console.log(activities.textContent);
+						node = activities.iterateNext();
+		      		}
+			    }
+			};
+			xhttp.open("GET", xpdlFile, true);
+			xhttp.send(); 
+			/
+
+			console.log("Leu o arquivo");
+
+			console.log( typeof xpdlFile);
+
+			//const dom = parser.parseFromString(xmlStr, "application/xml");
+
+			var nsResolver = document.createNSResolver( document.documentElement );
+
+			var activities = document.evaluate("//Activity", document , null, XPathResult.ANY_TYPE, null);
+
+			var node = activities.iterateNext();
+
+			console.log("Imprimindo atividade");
+
+			while(node){
+				console.log("Imprimindo atividade");
+				console.log(activities.textContent);
+				node = activities.iterateNext();
+      		}
+        }); 
+
+     	
+      }
+
+      
+	*/
+    </script>
+
 
     <script src="vendor/jkanban/jkanban.min.js"></script>
     
@@ -376,19 +455,6 @@
     //console.log(process.getJSONObject("header").getString("author"))
 
     </script>
-
-    <script>
-      $(document).ready(function(){
-        $("button").click(function(){
-        	window.open("teste.txt");
-          $.get("teste.txt", function(data, status){
-            alert("Data: " + data + "\nStatus: " + status);
-          });
-        });
-      });
-    </script>
-
-    <button>Send an HTTP GET request to a page and get the result back</button>
 
   </body>
 </html>

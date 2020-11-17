@@ -87,6 +87,10 @@ function getProcessById(id){
 function clearBoard(){
   console.log("aaaaaa")
   console.log(KanbanTest.getBoardElements("_compose"));
+
+  while( KanbanTest.getBoardElements("_compose").length > 0) KanbanTest.removeElement("id");
+  while( KanbanTest.getBoardElements("_full_process").length > 0) KanbanTest.removeElement("id");
+
   for (let i = 0; i < KanbanTest.getBoardElements("_compose").length + 8; i++) {
     KanbanTest.removeElement("id")
   }
