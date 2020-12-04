@@ -18,7 +18,7 @@ https://getbootstrap.com/
 - Rode o projeto (botão de play verde)
 - Acesse e hofstede-matheus.github.io/boa/ e clique em um serviço (ex: SPC)
 
-#Como iniciar o servidor NodeJs
+# Como iniciar o servidor NodeJs
 - Baixar e instalar o Node.js (https://nodejs.org)
 - Abrir o promt de comando como administrador na pasta do projeto (BOA Suíte);
 - Executar o comando "npm install";
