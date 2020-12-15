@@ -1,0 +1,28 @@
+{
+  "name": "boa-suite",
+  "version": "1.0.0",
+  "description": "Projeto de Implementação do BOA (Business Oriented Architecture)",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmeconi/BOA-Suite.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lmeconi/BOA-Suite/issues"
+  },
+  "homepage": "https://github.com/lmeconi/BOA-Suite#readme",
+  "dependencies": {
+    "dom-parser": "^0.1.6",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0",
+    "multer": "^1.4.2",
+    "xml2js": "^0.4.23"
+  }
+}

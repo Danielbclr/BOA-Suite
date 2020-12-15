@@ -178,97 +178,108 @@
 
        var readXml=null;
        $('#xmlForm').submit(function(event) {
-       	   console.log("Imprimindo atividade");
-           event.preventDefault();
-           var selectedFile = document.getElementById('input').files[0];     
+         
+        $.get('/ajax', function(data, status){
+          console.log(data);
+        })
 
-           console.log(selectedFile);
-           var reader = new FileReader();
-           reader.onload = function(e) {
-               readXml=e.target.result;
-               console.log(readXml);
+        console.log("Imprimindo atividade");
+        event.preventDefault();
+        var selectedFile = document.getElementById('input').files[0];     
 
-               //sendFetch(readXml);
-               //sendAjax(readXml);
-               sendAjax(selectedFile);
-               //sendPost(readXml);
+        console.log(selectedFile);
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // console.log(e);
+            // console.log(typeof e);
 
-               var fileName = selectedFile.name.slice(0, -5);
-               console.log(fileName)
+            // console.log(e.target);
+            // console.log(typeof e.target);
 
-               var parser = new DOMParser();
-               var doc = parser.parseFromString(readXml, "application/xml");
-               console.log(doc);
-               console.log(typeof readXml);
-               console.log(typeof doc);
+            // console.log(e.target.result);
+            // console.log(typeof e.target.result);
 
-               var nodes = doc.getElementsByTagName("Activity");
-               console.log(nodes[0]);
-               console.log(nodes[0].getAttribute("Id"));
+            readXml=e.target.result;
+            console.log(readXml);
 
-			   console.log(process.length + 1)
-               var novoModelo=
-               {
-			        header: {
-			            process_id: String(process.length + 1),
-			            name: fileName,
-			            description: "Diagrama 1",
-			            author: "Luciane Meconi",
-			        },
-			        steps:[]
-		    	}
+            sendAjax(selectedFile);
 
-		    	var step = {
-	                id: "",
-	                name: "",
-	                boa: false
-	            };
+            var fileName = selectedFile.name.slice(0, -5);
+            console.log(fileName)
 
-	            for( let i = 0; i < nodes.length; i++){
-	            	var n = nodes[i];
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(readXml, "application/xml");
+            console.log(doc);
+            console.log(typeof readXml);
+            console.log(typeof doc);
 
-	            	if(n.getAttribute("Name") != ""){
-		            	step.id = n.getAttribute("Id");
-		            	step.name = n.getAttribute("Name");
+            var nodes = doc.getElementsByTagName("Activity");
+            console.log(nodes[0]);
+            console.log(nodes[0].getAttribute("Id"));
 
-		            	console.log(i);
-		            	console.log(step.id);
-		            	console.log(step.name);
+      console.log(process.length + 1)
+            var novoModelo=
+            {
+          header: {
+              process_id: String(process.length + 1),
+              name: fileName,
+              description: "Diagrama 1",
+              author: "Luciane Meconi",
+          },
+          steps:[]
+      }
 
-		            	novoModelo.steps.push({
-			                id: n.getAttribute("Id"),
-			                name: n.getAttribute("Name"),
-			                boa: false
-			            }
-		            	);
+      var step = {
+              id: "",
+              name: "",
+              boa: false
+          };
 
-		            	console.log(novoModelo.steps[i]);
-		            	console.log(novoModelo);
-		            	console.log("================");
-		            }
+          for( let i = 0; i < nodes.length; i++){
+            var n = nodes[i];
 
-	            }
+            if(n.getAttribute("Name") != ""){
+              step.id = n.getAttribute("Id");
+              step.name = n.getAttribute("Name");
 
-	            console.log("Finalizou parse");
+              console.log(i);
+              console.log(step.id);
+              console.log(step.name);
 
-	            console.log(novoModelo);
-	            console.log(process[0]);
+              novoModelo.steps.push({
+                  id: n.getAttribute("Id"),
+                  name: n.getAttribute("Name"),
+                  boa: false
+              }
+              );
 
-	            process.push(novoModelo);
+              console.log(novoModelo.steps[i]);
+              console.log(novoModelo);
+              console.log("================");
+            }
 
-	            console.log(novoModelo);
+          }
 
-              	alert("Publicando processos");
+          console.log("Finalizou parse");
+
+          console.log(novoModelo);
+          console.log(process[0]);
+
+          process.push(novoModelo);
+
+          console.log(novoModelo);
+
+            alert("Publicando processos");
 
 
-	            clearBoard();
-	            clearDiscover();
+          clearBoard();
+          clearDiscover();
 
-	            populateWithProcesses();
+          populateWithProcesses();
 
 
-           }
-           reader.readAsText(selectedFile);
+        }
+        reader.readAsText(selectedFile);
 
        });
 
