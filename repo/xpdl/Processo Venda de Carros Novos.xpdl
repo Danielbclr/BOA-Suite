@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="a3b2ddf1-cc89-4a95-851c-1c9d506762ee" Name="Diagrama 1" xmlns="http://www.wfmc.org/2009/XPDL2.2">
+  <PackageHeader>
+    <XPDLVersion>2.2</XPDLVersion>
+    <Vendor>Bizagi Process Modeler.</Vendor>
+    <Created>2019-02-25T15:35:07.3743984-03:00</Created>
+    <ModificationDate>2019-02-25T17:29:41.1811842-03:00</ModificationDate>
+    <Description>Diagrama 1</Description>
+    <Documentation />
+  </PackageHeader>
+  <RedefinableHeader>
+    <Author>Luciane Meconi</Author>
+    <Version>1.0</Version>
+    <Countrykey>CO</Countrykey>
+  </RedefinableHeader>
+  <ExternalPackages />
+  <Pools>
+    <Pool Id="e906f4b7-5ad5-4628-a581-656afd1d500a" Name="Processo principal" Process="b51e3bf8-c2a4-4dcc-a325-f029d5ec990f" BoundaryVisible="false">
+      <Lanes />
+      <NodeGraphicsInfos>
+        <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="350" Width="700" BorderColor="-16777216" FillColor="-1">
+          <Coordinates XCoordinate="30" YCoordinate="30" />
+        </NodeGraphicsInfo>
+      </NodeGraphicsInfos>
+    </Pool>
+    <Pool Id="eae27379-4245-4d77-a0a9-785a9998f2d8" Name="Cliente" Process="8cb97a6d-caf0-4485-b8ac-46a977ff9756" BoundaryVisible="true">
+      <Lanes />
+      <NodeGraphicsInfos>
+        <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="80" Width="1033" BorderColor="-16777216" FillColor="-1">
+          <Coordinates XCoordinate="30" YCoordinate="16" />
+        </NodeGraphicsInfo>
+      </NodeGraphicsInfos>
+    </Pool>
+    <Pool Id="25466d23-34a9-45b7-9949-b3839981cf39" Name="Vendas de carros novos" Process="fcc384cd-b343-4e4f-ad27-5fb6768af730" BoundaryVisible="true">
+      <Lanes>
+        <Lane Id="7d53ef23-6f20-42c8-8c27-b8622b08fb83" Name="Vendas" ParentPool="25466d23-34a9-45b7-9949-b3839981cf39">
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="172" Width="985" BorderColor="-11513776" FillColor="-1">
+              <Coordinates XCoordinate="50" YCoordinate="0" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Lane>
+        <Lane Id="b8ecf4fe-0444-463a-8cec-b0eb4198437a" Name="Preparo" ParentPool="25466d23-34a9-45b7-9949-b3839981cf39">
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="167" Width="985" BorderColor="-11513776" FillColor="-1">
+              <Coordinates XCoordinate="50" YCoordinate="172" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Lane>
+        <Lane Id="68e6bb7a-99e1-4e16-9157-240c088ad0ef" Name="Fiinanceiro" ParentPool="25466d23-34a9-45b7-9949-b3839981cf39">
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="195.29998779296875" Width="985" BorderColor="-11513776" FillColor="-1">
+              <Coordinates XCoordinate="50" YCoordinate="339" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Lane>
+      </Lanes>
+      <NodeGraphicsInfos>
+        <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="534.29998779296875" Width="1035" BorderColor="-16777216" FillColor="-1">
+          <Coordinates XCoordinate="30" YCoordinate="168" />
+        </NodeGraphicsInfo>
+      </NodeGraphicsInfos>
+    </Pool>
+    <Pool Id="a291ecfb-1310-4396-9e16-69daa86b5487" Name="Fábrica" Process="fc0292c5-d631-4eba-ab95-62699579a7a8" BoundaryVisible="true">
+      <Lanes />
+      <NodeGraphicsInfos>
+        <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="70" Width="491" BorderColor="-16777216" FillColor="-1">
+          <Coordinates XCoordinate="30" YCoordinate="760" />
+        </NodeGraphicsInfo>
+      </NodeGraphicsInfos>
+    </Pool>
+    <Pool Id="48ddb921-dcf4-4771-ab0e-7096471ddf16" Name="Financeira" Process="165ac099-9f50-410a-8e8c-2006995a0a41" BoundaryVisible="true">
+      <Lanes />
+      <NodeGraphicsInfos>
+        <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="72" Width="534" BorderColor="-16777216" FillColor="-1">
+          <Coordinates XCoordinate="533" YCoordinate="759" />
+        </NodeGraphicsInfo>
+      </NodeGraphicsInfos>
+    </Pool>
+  </Pools>
+  <MessageFlows>
+    <MessageFlow Id="968e6d70-1e64-4886-89b8-43d1fb1e6882" Name="Pedido de confirmação" Source="a6246e49-1376-4a20-8480-38d7efd32235" Target="eae27379-4245-4d77-a0a9-785a9998f2d8">
+      <ConnectorGraphicsInfos>
+        <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+          <Coordinates XCoordinate="445" YCoordinate="224" />
+          <Coordinates XCoordinate="445" YCoordinate="162" />
+          <Coordinates XCoordinate="470" YCoordinate="162" />
+          <Coordinates XCoordinate="470" YCoordinate="96" />
+        </ConnectorGraphicsInfo>
+      </ConnectorGraphicsInfos>
+      <ExtendedAttributes />
+    </MessageFlow>
+    <MessageFlow Id="1e0558f3-71cc-4de3-aafd-29e739ea6ae4" Name="Resposta de confirmação" Source="eae27379-4245-4d77-a0a9-785a9998f2d8" Target="a6246e49-1376-4a20-8480-38d7efd32235">
+      <ConnectorGraphicsInfos>
+        <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+          <Coordinates XCoordinate="521" YCoordinate="96" />
+          <Coordinates XCoordinate="521" YCoordinate="132" />
+          <Coordinates XCoordinate="497" YCoordinate="132" />
+          <Coordinates XCoordinate="497" YCoordinate="224" />
+        </ConnectorGraphicsInfo>
+      </ConnectorGraphicsInfos>
+      <ExtendedAttributes />
+    </MessageFlow>
+    <MessageFlow Id="e2e5091a-5b42-451f-80db-9d8382d2aadd" Name="Ordem de fábrica" Source="a6246e49-1376-4a20-8480-38d7efd32235" Target="a291ecfb-1310-4396-9e16-69daa86b5487">
+      <ConnectorGraphicsInfos>
+        <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+          <Coordinates XCoordinate="428" YCoordinate="284" />
+          <Coordinates XCoordinate="428" YCoordinate="356.5" />
+          <Coordinates XCoordinate="239" YCoordinate="356.5" />
+          <Coordinates XCoordinate="239" YCoordinate="760" />
+        </ConnectorGraphicsInfo>
+      </ConnectorGraphicsInfos>
+      <ExtendedAttributes />
+    </MessageFlow>
+    <MessageFlow Id="215d5f68-3e79-4b10-85b6-53aa7d192996" Name="Data de envio" Source="a291ecfb-1310-4396-9e16-69daa86b5487" Target="a6246e49-1376-4a20-8480-38d7efd32235">
+      <ConnectorGraphicsInfos>
+        <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+          <Coordinates XCoordinate="263" YCoordinate="760" />
+          <Coordinates XCoordinate="263" YCoordinate="395.27777099609375" />
+          <Coordinates XCoordinate="463" YCoordinate="395.27777099609375" />
+          <Coordinates XCoordinate="463" YCoordinate="284" />
+        </ConnectorGraphicsInfo>
+      </ConnectorGraphicsInfos>
+      <ExtendedAttributes />
+    </MessageFlow>
+    <MessageFlow Id="928b3184-e14f-427b-92c2-2056154cbaa3" Source="eae27379-4245-4d77-a0a9-785a9998f2d8" Target="a37f9df6-54e6-44dc-a175-0b9c11987823">
+      <ConnectorGraphicsInfos>
+        <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+          <Coordinates XCoordinate="143" YCoordinate="96" />
+          <Coordinates XCoordinate="143" YCoordinate="128" />
+          <Coordinates XCoordinate="147" YCoordinate="128" />
+          <Coordinates XCoordinate="147" YCoordinate="239" />
+        </ConnectorGraphicsInfo>
+      </ConnectorGraphicsInfos>
+      <ExtendedAttributes />
+    </MessageFlow>
+    <MessageFlow Id="13595c0b-ca77-4d97-ba09-f4b46bbe27e8" Name="Entregar veículo e  registro temporário" Source="9f56c4d8-1ca9-4a15-b735-8a57d2e10137" Target="eae27379-4245-4d77-a0a9-785a9998f2d8">
+      <ConnectorGraphicsInfos>
+        <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+          <Coordinates XCoordinate="853" YCoordinate="238" />
+          <Coordinates XCoordinate="853" YCoordinate="167" />
+          <Coordinates XCoordinate="874" YCoordinate="167" />
+          <Coordinates XCoordinate="874" YCoordinate="96" />
+        </ConnectorGraphicsInfo>
+      </ConnectorGraphicsInfos>
+      <ExtendedAttributes />
+    </MessageFlow>
+    <MessageFlow Id="14939736-cc22-4d26-8d6c-9520dc72730b" Name="Cancelar ordem de fábrica" Source="a6246e49-1376-4a20-8480-38d7efd32235" Target="a291ecfb-1310-4396-9e16-69daa86b5487">
+      <ConnectorGraphicsInfos>
+        <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+          <Coordinates XCoordinate="480" YCoordinate="284" />
+          <Coordinates XCoordinate="480" YCoordinate="444.66665649414063" />
+          <Coordinates XCoordinate="299" YCoordinate="444.66665649414063" />
+          <Coordinates XCoordinate="299" YCoordinate="760" />
+        </ConnectorGraphicsInfo>
+      </ConnectorGraphicsInfos>
+      <ExtendedAttributes />
+    </MessageFlow>
+    <MessageFlow Id="6b7028cc-9040-4b42-8062-268d9f9170d4" Name="pedido de empréstimo" Source="58bdab99-e1c9-4c02-93af-c870e6c3af60" Target="48ddb921-dcf4-4771-ab0e-7096471ddf16">
+      <ConnectorGraphicsInfos>
+        <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+          <Coordinates XCoordinate="501" YCoordinate="635" />
+          <Coordinates XCoordinate="501" YCoordinate="727.5555419921875" />
+          <Coordinates XCoordinate="618" YCoordinate="727.5555419921875" />
+          <Coordinates XCoordinate="618" YCoordinate="759" />
+        </ConnectorGraphicsInfo>
+      </ConnectorGraphicsInfos>
+      <ExtendedAttributes />
+    </MessageFlow>
+    <MessageFlow Id="be5dd33a-0971-47b1-b531-5ded9c1751f2" Name="resposta do empréstimo" Source="48ddb921-dcf4-4771-ab0e-7096471ddf16" Target="58bdab99-e1c9-4c02-93af-c870e6c3af60">
+      <ConnectorGraphicsInfos>
+        <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+          <Coordinates XCoordinate="657" YCoordinate="759" />
+          <Coordinates XCoordinate="657" YCoordinate="687.5555419921875" />
+          <Coordinates XCoordinate="518" YCoordinate="687.5555419921875" />
+          <Coordinates XCoordinate="518" YCoordinate="635" />
+        </ConnectorGraphicsInfo>
+      </ConnectorGraphicsInfos>
+      <ExtendedAttributes />
+    </MessageFlow>
+  </MessageFlows>
+  <WorkflowProcesses>
+    <WorkflowProcess Id="b51e3bf8-c2a4-4dcc-a325-f029d5ec990f" Name="Processo principal">
+      <ProcessHeader>
+        <Created>2020-10-22T10:18:38.5835157-03:00</Created>
+        <Description />
+      </ProcessHeader>
+      <RedefinableHeader>
+        <Author />
+        <Version />
+        <Countrykey>CO</Countrykey>
+      </RedefinableHeader>
+      <ActivitySets />
+      <DataInputOutputs />
+      <ExtendedAttributes>
+        <ExtendedAttribute Name="RuntimeProperties" Value="{&quot;processClassProperties&quot;:{&quot;displayName&quot;:&quot;Processo principal&quot;,&quot;accessType&quot;:&quot;Process&quot;,&quot;order&quot;:1,&quot;useParentCaseNumber&quot;:true,&quot;enableAlarms&quot;:true,&quot;enableNotifications&quot;:true,&quot;creationDate&quot;:&quot;2019-02-25T15:35:07.4056681-03:00&quot;},&quot;processProperties&quot;:{&quot;version&quot;:{&quot;numberVersion&quot;:&quot;1.0&quot;,&quot;isActive&quot;:true},&quot;versionCreationDate&quot;:&quot;2019-02-25T15:35:07.4056681-03:00&quot;,&quot;supportsScopes&quot;:true,&quot;caseAccessType&quot;:&quot;Public&quot;,&quot;renderVersion&quot;:2,&quot;formsVersion&quot;:0}}" />
+      </ExtendedAttributes>
+    </WorkflowProcess>
+    <WorkflowProcess Id="8cb97a6d-caf0-4485-b8ac-46a977ff9756" Name="Cliente">
+      <ProcessHeader>
+        <Created>2020-10-22T10:18:38.5845343-03:00</Created>
+        <Description />
+      </ProcessHeader>
+      <RedefinableHeader>
+        <Author />
+        <Version />
+        <Countrykey>CO</Countrykey>
+      </RedefinableHeader>
+      <ActivitySets />
+      <DataInputOutputs />
+      <ExtendedAttributes>
+        <ExtendedAttribute Name="RuntimeProperties" Value="{&quot;processClassProperties&quot;:{&quot;accessType&quot;:&quot;Process&quot;,&quot;order&quot;:1,&quot;useParentCaseNumber&quot;:true,&quot;enableAlarms&quot;:true,&quot;enableNotifications&quot;:true,&quot;creationDate&quot;:&quot;2019-02-25T15:35:07.4747396-03:00&quot;},&quot;processProperties&quot;:{&quot;version&quot;:{&quot;numberVersion&quot;:&quot;1.0&quot;,&quot;isActive&quot;:true},&quot;versionCreationDate&quot;:&quot;2019-02-25T15:35:07.4747396-03:00&quot;,&quot;supportsScopes&quot;:true,&quot;caseAccessType&quot;:&quot;Public&quot;,&quot;renderVersion&quot;:2,&quot;formsVersion&quot;:0}}" />
+      </ExtendedAttributes>
+    </WorkflowProcess>
+    <WorkflowProcess Id="fcc384cd-b343-4e4f-ad27-5fb6768af730" Name="Vendas de carros novos">
+      <ProcessHeader>
+        <Created>2020-10-22T10:18:38.5845343-03:00</Created>
+        <Description />
+      </ProcessHeader>
+      <RedefinableHeader>
+        <Author />
+        <Version />
+        <Countrykey>CO</Countrykey>
+      </RedefinableHeader>
+      <ActivitySets>
+        <ActivitySet Id="0b498114-0190-4894-b225-ccc403225eac" Name="Inserir ordem">
+          <Associations />
+          <Artifacts />
+          <Activities />
+          <Transitions />
+        </ActivitySet>
+        <ActivitySet Id="1e604435-dee6-49f7-a40a-9e086c5bd6bc" Name="Preparar carro para entrega">
+          <Associations />
+          <Artifacts />
+          <Activities />
+          <Transitions />
+        </ActivitySet>
+        <ActivitySet Id="58bdab99-e1c9-4c02-93af-c870e6c3af60" Name="Arranjar financiamento">
+          <Associations />
+          <Artifacts />
+          <Activities />
+          <Transitions />
+        </ActivitySet>
+        <ActivitySet Id="324a446f-cac7-49ad-8c97-ee8e1b9bd36b" Name="Fechar e entregar">
+          <Associations />
+          <Artifacts />
+          <Activities />
+          <Transitions />
+        </ActivitySet>
+      </ActivitySets>
+      <DataInputOutputs />
+      <Activities>
+        <Activity Id="a37f9df6-54e6-44dc-a175-0b9c11987823" Name="Receber ordem">
+          <Description />
+          <Event>
+            <StartEvent Trigger="Message">
+              <TriggerResultMessage>
+                <Message Id="27a00d2f-6480-4e6b-8048-e538d2f17473" />
+              </TriggerResultMessage>
+            </StartEvent>
+          </Event>
+          <Documentation />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="30" Width="30" BorderColor="-10311914" FillColor="-1638505">
+              <Coordinates XCoordinate="132" YCoordinate="239" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Activity>
+        <Activity Id="0b498114-0190-4894-b225-ccc403225eac" Name="Inserir ordem">
+          <Description />
+          <BlockActivity ActivitySetId="0b498114-0190-4894-b225-ccc403225eac" />
+          <Performers />
+          <Documentation />
+          <Loop LoopType="None" />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="60" Width="90" BorderColor="-16553830" FillColor="-1249281">
+              <Coordinates XCoordinate="207" YCoordinate="224" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes>
+            <ExtendedAttribute Name="RuntimeProperties" Value="{&quot;priority&quot;:0,&quot;asynchronousBehavior&quot;:{},&quot;subProcessType&quot;:&quot;None&quot;,&quot;inputMappingType&quot;:&quot;None&quot;,&quot;outputMappingType&quot;:&quot;None&quot;,&quot;exitMode&quot;:&quot;AllTokens&quot;,&quot;groupByAttributesXPathListRef&quot;:[]}" />
+          </ExtendedAttributes>
+        </Activity>
+        <Activity Id="a6246e49-1376-4a20-8480-38d7efd32235" Name="Pedir carro de fábrica">
+          <Description />
+          <Implementation>
+            <Task />
+          </Implementation>
+          <Performers />
+          <Documentation />
+          <Loop LoopType="None" />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="60" Width="90" BorderColor="-16553830" FillColor="-1249281">
+              <Coordinates XCoordinate="418" YCoordinate="224" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Activity>
+        <Activity Id="278f18db-f8ff-4b5a-b5fe-8763a6149b11" Name="Carro indisponível?">
+          <Description />
+          <Route />
+          <Documentation />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="40" Width="40" BorderColor="-5855715" FillColor="-52">
+              <Coordinates XCoordinate="541" YCoordinate="234" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Activity>
+        <Activity Id="162c5a77-8c07-4c29-b654-60bb1bac1993" Name="Carro indisponível">
+          <Description />
+          <Event>
+            <EndEvent Result="None" />
+          </Event>
+          <Documentation />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="30" Width="30" BorderColor="-6750208" FillColor="-1135958">
+              <Coordinates XCoordinate="730" YCoordinate="239" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Activity>
+        <Activity Id="1e604435-dee6-49f7-a40a-9e086c5bd6bc" Name="Preparar carro para entrega">
+          <Description />
+          <BlockActivity ActivitySetId="1e604435-dee6-49f7-a40a-9e086c5bd6bc" />
+          <Performers />
+          <Documentation />
+          <Loop LoopType="None" />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="60" Width="90" BorderColor="-16553830" FillColor="-1249281">
+              <Coordinates XCoordinate="575" YCoordinate="382" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes>
+            <ExtendedAttribute Name="RuntimeProperties" Value="{&quot;priority&quot;:0,&quot;asynchronousBehavior&quot;:{},&quot;subProcessType&quot;:&quot;None&quot;,&quot;inputMappingType&quot;:&quot;None&quot;,&quot;outputMappingType&quot;:&quot;None&quot;,&quot;exitMode&quot;:&quot;AllTokens&quot;,&quot;groupByAttributesXPathListRef&quot;:[]}" />
+          </ExtendedAttributes>
+        </Activity>
+        <Activity Id="58bdab99-e1c9-4c02-93af-c870e6c3af60" Name="Arranjar financiamento">
+          <Description />
+          <BlockActivity ActivitySetId="58bdab99-e1c9-4c02-93af-c870e6c3af60" />
+          <Performers />
+          <Documentation />
+          <Loop LoopType="None" />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="60" Width="90" BorderColor="-16553830" FillColor="-1249281">
+              <Coordinates XCoordinate="456" YCoordinate="575" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes>
+            <ExtendedAttribute Name="RuntimeProperties" Value="{&quot;priority&quot;:0,&quot;asynchronousBehavior&quot;:{},&quot;subProcessType&quot;:&quot;None&quot;,&quot;inputMappingType&quot;:&quot;None&quot;,&quot;outputMappingType&quot;:&quot;None&quot;,&quot;exitMode&quot;:&quot;AllTokens&quot;,&quot;groupByAttributesXPathListRef&quot;:[]}" />
+          </ExtendedAttributes>
+        </Activity>
+        <Activity Id="64284281-509a-46ed-a322-812bb3671701" Name="Financiamento indisponível?  ">
+          <Description />
+          <Route />
+          <Documentation />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="40" Width="40" BorderColor="-5855715" FillColor="-52">
+              <Coordinates XCoordinate="605" YCoordinate="585" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Activity>
+        <Activity Id="ea08ed48-e686-4cec-83a2-b39259a98efd" Name="">
+          <Description />
+          <Route GatewayType="Parallel" />
+          <Documentation />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="40" Width="40" BorderColor="-5855715" FillColor="-52">
+              <Coordinates XCoordinate="718" YCoordinate="585" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Activity>
+        <Activity Id="324a446f-cac7-49ad-8c97-ee8e1b9bd36b" Name="Fechar e entregar">
+          <Description />
+          <BlockActivity ActivitySetId="324a446f-cac7-49ad-8c97-ee8e1b9bd36b" />
+          <Performers />
+          <Documentation />
+          <Loop LoopType="None" />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="60" Width="90" BorderColor="-16553830" FillColor="-1249281">
+              <Coordinates XCoordinate="808" YCoordinate="575" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes>
+            <ExtendedAttribute Name="RuntimeProperties" Value="{&quot;priority&quot;:0,&quot;asynchronousBehavior&quot;:{},&quot;subProcessType&quot;:&quot;None&quot;,&quot;inputMappingType&quot;:&quot;None&quot;,&quot;outputMappingType&quot;:&quot;None&quot;,&quot;exitMode&quot;:&quot;AllTokens&quot;,&quot;groupByAttributesXPathListRef&quot;:[]}" />
+          </ExtendedAttributes>
+        </Activity>
+        <Activity Id="9f56c4d8-1ca9-4a15-b735-8a57d2e10137" Name="Sucesso">
+          <Description />
+          <Event>
+            <EndEvent Result="Message">
+              <TriggerResultMessage CatchThrow="THROW">
+                <Message Id="6c5d5e45-3f6c-4c67-900a-bc28ac806b70" />
+              </TriggerResultMessage>
+            </EndEvent>
+          </Event>
+          <Documentation />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="30" Width="30" BorderColor="-6750208" FillColor="-1135958">
+              <Coordinates XCoordinate="838" YCoordinate="238" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Activity>
+        <Activity Id="2038183b-f551-4a17-9aa4-e80bb4156f5c" Name="Financiamento indisponível">
+          <Description />
+          <Event>
+            <EndEvent Result="Terminate" />
+          </Event>
+          <Documentation />
+          <NodeGraphicsInfos>
+            <NodeGraphicsInfo ToolId="BizAgi_Process_Modeler" Height="30" Width="30" BorderColor="-6750208" FillColor="-1135958">
+              <Coordinates XCoordinate="948" YCoordinate="240" />
+            </NodeGraphicsInfo>
+          </NodeGraphicsInfos>
+          <ExtendedAttributes />
+        </Activity>
+      </Activities>
+      <Transitions>
+        <Transition Id="77df643a-f749-46e4-9497-5e6319fa3c36" From="a37f9df6-54e6-44dc-a175-0b9c11987823" To="0b498114-0190-4894-b225-ccc403225eac">
+          <Condition />
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="162" YCoordinate="254" />
+              <Coordinates XCoordinate="207" YCoordinate="254" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="1cb52401-6238-4379-ac05-2461512293c3" From="a6246e49-1376-4a20-8480-38d7efd32235" To="278f18db-f8ff-4b5a-b5fe-8763a6149b11">
+          <Condition />
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="508" YCoordinate="254" />
+              <Coordinates XCoordinate="541" YCoordinate="254" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="b1259fe3-de47-4e3c-8f3e-e9e4fcc9f5e4" From="278f18db-f8ff-4b5a-b5fe-8763a6149b11" To="162c5a77-8c07-4c29-b654-60bb1bac1993" Name="sim">
+          <Condition Type="CONDITION">
+            <Expression />
+          </Condition>
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="581" YCoordinate="254" />
+              <Coordinates XCoordinate="730" YCoordinate="254" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="255265a2-bbde-4373-8007-57d4180faf83" From="278f18db-f8ff-4b5a-b5fe-8763a6149b11" To="1e604435-dee6-49f7-a40a-9e086c5bd6bc" Name="não">
+          <Condition Type="CONDITION">
+            <Expression />
+          </Condition>
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="561" YCoordinate="274" />
+              <Coordinates XCoordinate="561" YCoordinate="412" />
+              <Coordinates XCoordinate="575" YCoordinate="412" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="68cb6ac0-a817-4a84-8bc8-359a8c980fef" From="58bdab99-e1c9-4c02-93af-c870e6c3af60" To="64284281-509a-46ed-a322-812bb3671701">
+          <Condition />
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="546" YCoordinate="605" />
+              <Coordinates XCoordinate="605" YCoordinate="605" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="c62f2398-92a7-4475-ab10-e965fc0dbf93" From="64284281-509a-46ed-a322-812bb3671701" To="ea08ed48-e686-4cec-83a2-b39259a98efd" Name="não">
+          <Condition Type="CONDITION">
+            <Expression />
+          </Condition>
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="645" YCoordinate="605" />
+              <Coordinates XCoordinate="718" YCoordinate="605" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="45067b0a-b489-438b-848e-111600784297" From="ea08ed48-e686-4cec-83a2-b39259a98efd" To="324a446f-cac7-49ad-8c97-ee8e1b9bd36b">
+          <Condition />
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="758" YCoordinate="605" />
+              <Coordinates XCoordinate="808" YCoordinate="605" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="a498f31f-c637-47af-b388-f9a180b295a0" From="324a446f-cac7-49ad-8c97-ee8e1b9bd36b" To="9f56c4d8-1ca9-4a15-b735-8a57d2e10137">
+          <Condition />
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="853" YCoordinate="575" />
+              <Coordinates XCoordinate="853" YCoordinate="268" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="6f8810ab-8733-457f-908a-fafaa867d525" From="0b498114-0190-4894-b225-ccc403225eac" To="58bdab99-e1c9-4c02-93af-c870e6c3af60" Name="Ordem da Fábrica?">
+          <Condition />
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="252" YCoordinate="284" />
+              <Coordinates XCoordinate="252" YCoordinate="605" />
+              <Coordinates XCoordinate="456" YCoordinate="605" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="3ca0fd41-a5b2-4fa0-8632-afaa44a94ace" From="64284281-509a-46ed-a322-812bb3671701" To="2038183b-f551-4a17-9aa4-e80bb4156f5c" Name="sim">
+          <Condition Type="CONDITION">
+            <Expression />
+          </Condition>
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="625" YCoordinate="585" />
+              <Coordinates XCoordinate="625" YCoordinate="487.11111450195313" />
+              <Coordinates XCoordinate="882" YCoordinate="487.11111450195313" />
+              <Coordinates XCoordinate="882" YCoordinate="255" />
+              <Coordinates XCoordinate="948" YCoordinate="255" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="1eee777e-bcdc-4a07-9660-540fe2776801" From="1e604435-dee6-49f7-a40a-9e086c5bd6bc" To="ea08ed48-e686-4cec-83a2-b39259a98efd">
+          <Condition />
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="665" YCoordinate="412" />
+              <Coordinates XCoordinate="738" YCoordinate="412" />
+              <Coordinates XCoordinate="738" YCoordinate="585" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+        <Transition Id="b9e0bcd0-9aca-4240-a405-ec957b93fc4d" From="0b498114-0190-4894-b225-ccc403225eac" To="a6246e49-1376-4a20-8480-38d7efd32235">
+          <Condition />
+          <Description />
+          <ConnectorGraphicsInfos>
+            <ConnectorGraphicsInfo ToolId="BizAgi_Process_Modeler" BorderColor="-16777216">
+              <Coordinates XCoordinate="297" YCoordinate="254" />
+              <Coordinates XCoordinate="418" YCoordinate="254" />
+            </ConnectorGraphicsInfo>
+          </ConnectorGraphicsInfos>
+          <ExtendedAttributes />
+        </Transition>
+      </Transitions>
+      <ExtendedAttributes>
+        <ExtendedAttribute Name="RuntimeProperties" Value="{&quot;processClassProperties&quot;:{&quot;accessType&quot;:&quot;Process&quot;,&quot;order&quot;:1,&quot;useParentCaseNumber&quot;:true,&quot;enableAlarms&quot;:true,&quot;enableNotifications&quot;:true,&quot;creationDate&quot;:&quot;2019-02-25T15:39:08.6320957-03:00&quot;},&quot;processProperties&quot;:{&quot;version&quot;:{&quot;numberVersion&quot;:&quot;1.0&quot;,&quot;isActive&quot;:true},&quot;versionCreationDate&quot;:&quot;2019-02-25T15:39:08.6320957-03:00&quot;,&quot;supportsScopes&quot;:true,&quot;caseAccessType&quot;:&quot;Public&quot;,&quot;renderVersion&quot;:2,&quot;formsVersion&quot;:0}}" />
+      </ExtendedAttributes>
+    </WorkflowProcess>
+    <WorkflowProcess Id="fc0292c5-d631-4eba-ab95-62699579a7a8" Name="Fábrica">
+      <ProcessHeader>
+        <Created>2020-10-22T10:18:38.6614577-03:00</Created>
+        <Description />
+      </ProcessHeader>
+      <RedefinableHeader>
+        <Author />
+        <Version />
+        <Countrykey>CO</Countrykey>
+      </RedefinableHeader>
+      <ActivitySets />
+      <DataInputOutputs />
+      <ExtendedAttributes>
+        <ExtendedAttribute Name="RuntimeProperties" Value="{&quot;processClassProperties&quot;:{&quot;accessType&quot;:&quot;Process&quot;,&quot;order&quot;:1,&quot;useParentCaseNumber&quot;:true,&quot;enableAlarms&quot;:true,&quot;enableNotifications&quot;:true,&quot;creationDate&quot;:&quot;2019-02-25T15:43:21.6079382-03:00&quot;},&quot;processProperties&quot;:{&quot;version&quot;:{&quot;numberVersion&quot;:&quot;1.0&quot;,&quot;isActive&quot;:true},&quot;versionCreationDate&quot;:&quot;2019-02-25T15:43:21.6079382-03:00&quot;,&quot;supportsScopes&quot;:true,&quot;caseAccessType&quot;:&quot;Public&quot;,&quot;renderVersion&quot;:2,&quot;formsVersion&quot;:0}}" />
+      </ExtendedAttributes>
+    </WorkflowProcess>
+    <WorkflowProcess Id="165ac099-9f50-410a-8e8c-2006995a0a41" Name="Financeira">
+      <ProcessHeader>
+        <Created>2020-10-22T10:18:38.662457-03:00</Created>
+        <Description />
+      </ProcessHeader>
+      <RedefinableHeader>
+        <Author />
+        <Version />
+        <Countrykey>CO</Countrykey>
+      </RedefinableHeader>
+      <ActivitySets />
+      <DataInputOutputs />
+      <ExtendedAttributes>
+        <ExtendedAttribute Name="RuntimeProperties" Value="{&quot;processClassProperties&quot;:{&quot;accessType&quot;:&quot;Process&quot;,&quot;order&quot;:1,&quot;useParentCaseNumber&quot;:true,&quot;enableAlarms&quot;:true,&quot;enableNotifications&quot;:true,&quot;creationDate&quot;:&quot;2019-02-25T15:43:58.2973515-03:00&quot;},&quot;processProperties&quot;:{&quot;version&quot;:{&quot;numberVersion&quot;:&quot;1.0&quot;,&quot;isActive&quot;:true},&quot;versionCreationDate&quot;:&quot;2019-02-25T15:43:58.2973515-03:00&quot;,&quot;supportsScopes&quot;:true,&quot;caseAccessType&quot;:&quot;Public&quot;,&quot;renderVersion&quot;:2,&quot;formsVersion&quot;:0}}" />
+      </ExtendedAttributes>
+    </WorkflowProcess>
+  </WorkflowProcesses>
+  <ExtendedAttributes />
+</Package>

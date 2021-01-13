@@ -30,14 +30,29 @@ app.get('/', function(req, res) {
 //CONFIGURAÇÃO MULTER
 var storage = multer.diskStorage({
      destination: function (req, file, cb) {
-       cb(null, './public/');
+      if( file.originalname.split('.').pop() == "bpdl"){
+        cb(null, './repo/bpdl/');
+      }
+      else if(file.originalname.split('.').pop() == "xpdl" ){
+        cb(null, './repo/xpdl/');
+      }
      },
      filename: function (req, file, cb) {
        cb(null, file.originalname);
      }
    });
+
+  var storageBPDL = multer.diskStorage({
+    destination: function (req, file, cbBPDL) {
+      cbBPDL(null, './repo/bpdl/');
+    },
+    filename: function (req, file, cbBPDL) {
+      cbBPDL(null, file.originalname);
+    }
+  });
    
    var upload = multer({ storage: storage });
+   var uploadBPDL = multer({ storageBPDL: storageBPDL });
    
    app.use(express.static(path.join(__dirname, 'public')));
    
@@ -60,9 +75,22 @@ app.post('/', upload.single('file'), function(req, res){
      console.log(typeof req.file);
      console.log(req.body);
      console.log(typeof req.body);
-     parseFolder();
+
+     processos = [];
+
+     if(req.file.filename.split('.').pop() == "bpdl") parseFolder();
      
  });
+
+ app.post('/bpdl', uploadBPDL.single('file'), function(req, res){
+  console.log("Salvando arquivo");
+  console.log(req.file);
+  console.log(typeof req.file);
+  console.log(req.body);
+  console.log(typeof req.body);
+  //parseFolder();
+
+});
 
  app.get('/ajax', function(req, res) {
      res.send('batata');
@@ -78,6 +106,7 @@ app.post('/', upload.single('file'), function(req, res){
   var terminouLeitura = false;
 
   var dirname = './public/';
+  var diretorio = './repo/bpdl/';
 
   function printActivities(value, name){
     if(name != "") console.log("name = "+ name);
@@ -86,25 +115,30 @@ app.post('/', upload.single('file'), function(req, res){
 
   function parseFolder(){
     processos = [];
-    fs.readdir(dirname, function(err, filenames) {
+    var terminouLeitura = false;
+    var readXml=null;
+
+    fs.readdir(diretorio, function(err, filenames) {
       if (err) {
-        onError(err);
+        console.log(err);
         return;
       }
+      console.log("Total de arquivos: "+ filenames.length);
       filenames.forEach(function(filename) {
-        fs.readFile(dirname + filename, 'utf-8', function(err, content) {
+        fs.readFile(diretorio + filename, 'utf-8', function(err, content) {
           if (err) {
             console.log(err);
             return;
           }
           console.log('--> Lendo o arquivo ' + filename);
           readXml = content;
-          processName = path.basename(filename, '.xpdl');
-          console.log('- Nome do processo: ' + processName);
 
           const dom = new JSDOM(readXml);
 
-          activities = dom.window.document.getElementsByTagName("Activity");
+          processName = dom.window.document.querySelector("nome");
+          console.log('- Nome do processo: ' + processName.textContent);
+
+          activities = dom.window.document.getElementsByTagName("Atividade");
 
           console.log(processos.length + 1)
 
@@ -112,9 +146,11 @@ app.post('/', upload.single('file'), function(req, res){
           {
             header: {
               process_id: String(processos.length + 1),
-              name: path.basename(filename, '.xpdl'),
-              description: "Diagrama 1",
-              author: "Luciane Meconi",
+              name: dom.window.document.querySelector("nome").textContent,
+              description: dom.window.document.querySelector("descrição").textContent,
+              author: dom.window.document.querySelector("autor").textContent,
+              date: dom.window.document.querySelector("data").textContent,
+              version: dom.window.document.querySelector("versão").textContent,
             },
             steps:[]
           }
@@ -126,16 +162,17 @@ app.post('/', upload.single('file'), function(req, res){
           };
 
           for( let i = 0; i < activities.length; i++){
-            console.log( activities[i].getAttribute("Name"));
+            console.log( activities[i].getAttribute("nome"));
 
-            var nameP = activities[i].getAttribute("Name");
-            var idP = activities[i].getAttribute("Id")
+            var nameP = activities[i].getAttribute("nome");
+            var idP = activities[i].getAttribute("id");
+            var publicP = activities[i].getAttribute("público") == "true"? true : false;
 
             if( nameP != ""){
               novoModelo.steps.push({
                 id: idP,
                 name: nameP,
-                boa: false
+                boa: publicP
               });
             }
           }
@@ -143,7 +180,7 @@ app.post('/', upload.single('file'), function(req, res){
           processos.push(novoModelo);
 
           if(filenames[filenames.length-1] == filename){
-            console.log("Terminoy leitura");
+            console.log("Terminou leitura");
             terminouLeitura = true;
             printProcessos();
           }
@@ -155,8 +192,8 @@ app.post('/', upload.single('file'), function(req, res){
 
   }
 
+
   async function printProcessos(){
-    console.log("batata");
     console.log("tamanho: " + processos.length);
 
     for(let i=0; i<processos.length;i++){
@@ -166,6 +203,7 @@ app.post('/', upload.single('file'), function(req, res){
   }
 
    parseFolder();
+  //  printProcessos();
    
    if(terminouLeitura){
     printProcessos();
@@ -174,76 +212,6 @@ app.post('/', upload.single('file'), function(req, res){
    app.get('/processos', function(req, res) {
     res.send(processos);
   });
-
-   
-
-           
-  //        console.log(readXml);
-
-  // var parser = new DOMParser();
-  // var doc = parser.parseFromString(readXml, "application/xml");
-  // console.log(doc);
-  // console.log(typeof readXml);
-  // console.log(typeof doc);
-
-  // var nodes = doc.getElementsByTagName("Activity");
-  // console.log(nodes[0]);
-  // console.log(nodes[0].getAttribute("Id"));
-
-  // console.log(processos.length + 1)
-  //     var novoModelo=
-  //     {
-  //   header: {
-  //       process_id: String(process.length + 1),
-  //       name: fileName,
-  //       description: "Diagrama 1",
-  //       author: "Luciane Meconi",
-  //   },
-  //   steps:[]
-  // }
-
-  // var step = {
-  //       id: "",
-  //       name: "",
-  //       boa: false
-  //   };
-
-  //   for( let i = 0; i < nodes.length; i++){
-  //     var n = nodes[i];
-
-  //     if(n.getAttribute("Name") != ""){
-  //       step.id = n.getAttribute("Id");
-  //       step.name = n.getAttribute("Name");
-
-  //       console.log(i);
-  //       console.log(step.id);
-  //       console.log(step.name);
-
-  //       novoModelo.steps.push({
-  //           id: n.getAttribute("Id"),
-  //           name: n.getAttribute("Name"),
-  //           boa: false
-  //       }
-  //       );
-
-  //       console.log(novoModelo.steps[i]);
-  //       console.log(novoModelo);
-  //       console.log("================");
-  //     }
-
-  //   }
-
-  //   console.log("Finalizou parse");
-
-  //   console.log(novoModelo);
-  //   console.log(process[0]);
-
-  //   process.push(novoModelo);
-
-  //   console.log(novoModelo);
-
-  //   alert("Publicando processos");
-  //     //    }
  
 
 

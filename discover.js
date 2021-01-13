@@ -1,6 +1,7 @@
 function populateWithProcesses(){
 
     $.get('/processos', function(data, status){
+        process = [];
         process = data;
         for (let i = 0; i < process.length; i++) {
             console.log(process[i].header.name)

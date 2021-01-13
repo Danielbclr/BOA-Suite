@@ -27,6 +27,7 @@
     <script src="./server.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script>
+    <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/vkbeautify/vkbeautify.0.99.00.beta.js"></script>
 
     
 
@@ -86,32 +87,64 @@
     <div id="myKanban"></div>
 
 
-	<div class="input-group mb-3">
+  <!--  BOTAO DE ENVIO DO XPDL  -->
+	<div class="input-group mb-3" style="display: none;">
 	  <div class="input-group-prepend">
 	    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
 	  </div>
-	  <div class="custom-file">
-      <form id="xmlForm" name="xmlForm" enctype="multipart/form-data">
-          <input id="input" type="file" accept=".xpdl" name="file"> <input type="submit">
+	  <div class="custom-file" style="display: none;">
+      <form id="xmlForm" name="xmlForm" enctype="multipart/form-data" onsubmit="return false">
+          <input id="input" type="file" accept=".xpdl" name="file"> <input type="submit" id='arquivoOK'>
     	</form>
 	  </div>
   </div>
 
   
-
+<!-- TESTE
   <form method="post" action="/upload" enctype="multipart/form-data">
     <input type="file" name="file" />
     <input type="submit" />
   </form>
+-->
+  
+
+<!--  CRIAR POP-UP PARA PUBLICACAO  -->
+  <button class="open-button" onclick="openForm()">Open Form</button>
+
+  <div class="form-popup" id="myForm">
+    <form id='popupForm' class="form-container" onsubmit="return false">
+      <h1>Publicação</h1>
+
+      <p id='popupForm_p1'>Deseja publicar o seguinte .xpdl?</p>
+      <p id="nome_xpdl"></p>
+
+      <button type="button" class="btn" onclick="aceitarXpdl()">Aceitar</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>
+    </form>
+  </div>
+
+  <div class="form-popup" id="myForm2">
+    <form id='popupForm2' class="form-container">
+      <h1>Publicação</h1>
+
+      <p id='popupForm_p2'>Selecione as atividades que quer publicar</p>
+
+      <button type="submit" class="btn" onclick="aceitarXpdl()">Aceitar</button>
+      <button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>
+    </form>
+  </div>
 
 
-	<script>
+  <!--
+    <script>
 	  const fileSelector = document.getElementById('file');
 	  fileSelector.addEventListener('change', (event) => {
 	    const fileList = event.target.files;
 	    console.log(fileList);
 	  });
 	</script>
+  -->
+	
 
 	<script>
     
@@ -175,16 +208,17 @@
         console.error(error)
       })
     }//*/
-
+/*
        var readXml=null;
        $('#xmlForm').submit(function(event) {
-         
-        $.get('/ajax', function(data, status){
-          console.log(data);
-        })
+        event.preventDefault();
+
+        // $.get('/ajax', function(data, status){
+        //   console.log(data);
+        // })
 
         console.log("Imprimindo atividade");
-        event.preventDefault();
+        
         var selectedFile = document.getElementById('input').files[0];     
 
         console.log(selectedFile);
@@ -282,7 +316,7 @@
         reader.readAsText(selectedFile);
 
        });
-
+*/
        
 
     </script>
@@ -352,25 +386,26 @@
           dragTo: ["_working"],
           item: [
             {
-              title: "<button style=\"text-align:center; margin: 0 auto;\" class=\"btn btn-primary btn-fab btn-round\"> <i class=\"material-icons\">add</i> </button>Clique para adcionar um arquivo .xpdl",
+              title: "<button style=\"text-align:center; margin: 0 auto;\" class=\"btn btn-primary btn-fab btn-round\"><i class=\"material-icons\">add</i> </button>Clique para adcionar um arquivo .xpdl",
               click: function(el) {
-              	process.push(adcEl);
+                getFile();
+              // 	process.push(adcEl);
 
-              	console.log(adcEl.header.name)
+              // 	console.log(adcEl.header.name)
 
-              	alert("Publicando processos");
+              // 	alert("Publicando processos");
 
-              	console.log(process[4].header.name);
+              // 	console.log(process[4].header.name);
 
-              	console.log(el.getAttribute('data-process_id'));
-	            console.log(getProcessById(el.getAttribute('data-process_id')));
+              // 	console.log(el.getAttribute('data-process_id'));
+	            // console.log(getProcessById(el.getAttribute('data-process_id')));
 
-	            clearBoard();
-	            clearDiscover();
+	            // clearBoard();
+	            // clearDiscover();
 
-	            populateWithProcesses();
+	            // populateWithProcesses();
 
-                alert("Os processos foram publicados!");
+              //   alert("Os processos foram publicados!");
               }
             }
           ]
@@ -382,20 +417,346 @@
         },
         {
           id: "_full_process",
-          title: "Processo",
+          title: "Atividades do Processo",
           class: "success",
           dragTo: ["_working"],
           item: []
         },
         {
           id: "_compose",
-          title: "Composição",
+          title: "Composição de Processos Publicos",
           class: "success",
           dragTo: ["_working"],
           item: []
         }
       ]
       });
+
+      function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+        document.getElementById('xmlForm').reset();
+      }
+
+      var ativ;
+      var bpdl;
+      var processElem;
+      var atividades = [];
+
+      var nomeP;
+      var autorP;
+      var versaoP;
+
+      $('#xmlForm').submit(function(event) {
+        //event.preventDefault();
+
+        console.log("Submit!!!")
+
+        bpdl = document.implementation.createDocument("", "", null);
+        ativ = parseFile(document.getElementById('input').files[0]);
+        processElem = bpdl.createElement("Processo");
+        bpdl.appendChild(processElem); 
+
+        console.log(ativ);
+        //console.log(JSON.stringify(bpdl, null, 4));
+
+      });
+
+      function aceitarXpdl() {
+        document.getElementById('arquivoOK').click();
+        //document.getElementById('xmlForm').submit;
+
+        //document.getElementById("myForm").style.display = "none";
+        //document.getElementById("myForm2").style.display = "block";
+
+        //document.getElementById('popupForm_p1').innerHTML = 'Selecione as atividades que quer publicar';
+        document.getElementById('popupForm').innerHTML=
+        '<h1>Publicação</h1>'+
+        '<p>Insira as informações sobre o processo</p>'+
+        '<label for="title"><b>Insira o nome do processo</b></label>' +
+        '<input type="text" placeholder="Título" id="title" required>'+
+        '<label for="author"><b>Insira o nome do autor</b></label>' +
+        '<input type="text" placeholder="Autor" id="author" required>'+
+        '<label for="version"><b>Insira a versão</b></label>' +
+        '<input type="text" placeholder="Versão" id="version" required>'+
+        '<label for="description"><b>Insira uma descrição</b></label>' +
+        '<textarea id = "description"  placeholder="Insira uma descrição"></textarea>'+
+        '<button type="submit" class="btn" onclick="aceitarHeader()">Seguinte</button>'+
+        '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+      }
+
+      function parseFile(selectedFile) {
+        var readXml=null;
+
+        console.log("Imprimindo atividade");
+
+        console.log(selectedFile);
+
+        var readerP = new FileReader();
+        readerP.onload = function(e) {
+          e.preventDefault();
+
+          console.log("Imprimindo atividade");
+
+          readXml=e.target.result;
+          console.log(readXml);
+
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(readXml, "application/xml");
+          console.log(doc);
+          console.log(typeof readXml);
+          console.log(typeof doc);
+          
+          var nodes = doc.getElementsByTagName("Activity");
+          console.log(nodes[0]);
+          console.log(nodes[0].getAttribute("Id"));
+
+          console.log(nodes);
+
+          ativ = nodes;
+
+          return nodes;
+        }
+      readerP.readAsText(selectedFile);
+      }
+
+      function aceitarAtividadesPublicas(){
+
+        var atividadesPublicas = document.querySelectorAll('input[type=checkbox]');
+        var atividadesElem = bpdl.createElement("Atividades");
+
+        document.getElementById('popupForm').innerHTML=
+          '<h1>Publicação</h1>'+
+          '<p>Aguarde enquanto a Publicação finaliza</p>';
+
+        for (var i = 0; i < atividadesPublicas.length; i++) {
+          console.log(atividadesPublicas[i].value + " " + atividadesPublicas[i].checked);
+          if(atividadesPublicas[i].checked){
+            console.log(atividades[i].name);
+            atividades[i].public = true;
+          }
+
+          var ativElem = bpdl.createElement("Atividade");
+          ativElem.setAttribute("nome", atividades[i].name);
+          ativElem.setAttribute("id", atividades[i].id);
+          ativElem.setAttribute("público", atividades[i].public);
+
+          atividadesElem.appendChild(ativElem);
+
+        }
+
+        processElem.appendChild(atividadesElem);
+
+        var XMLS = new XMLSerializer();
+        var bpdl_xmls = XMLS.serializeToString(processElem);
+        vkXML = vkbeautify.xml(bpdl_xmls);
+
+        console.log(vkXML);
+        console.log(typeof vkXML);
+
+        //var blob = new Blob(vkXML, {type: 'plain/text'});
+        var file = new File([vkXML], nomeP + "_V"+ versaoP+".bpdl", {type: "text/plain"});
+
+        var formData = new FormData();
+        formData.append('file', file);
+
+        $.ajax({
+            url: '/',
+            data: formData,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            'success':function(data){
+                alert(data);
+            }
+        });
+
+        var formData = new FormData();
+        formData.append('file', document.getElementById('input').files[0]);
+
+        $.ajax({
+            url: '/',
+            data: formData,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            'success':function(data){
+                alert(data);
+            }
+        });
+
+        document.getElementById('popupForm').innerHTML=
+          '<h1>Publicação Finalizada</h1>'+
+          '<button type="submit" class="btn" onclick="refresh()">Finalizar</button>';
+        
+      }
+
+      function refresh(){
+        clearBoard();
+        clearDiscover();
+
+        populateWithProcesses();
+      }
+
+      function aceitarAtividades() {
+        var checkboxes = document.querySelectorAll('input[type=checkbox]')
+
+        document.getElementById('popupForm').innerHTML=
+          '<h1>Publicação</h1>'+
+          '<p>Selecione quais atividades são publicas</p>' +
+          '<ul id="ul">'+
+          '</ul>'+
+          '<button type="submit" class="btn" onclick="aceitarAtividadesPublicas()">Seguinte</button>'+
+          '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+
+        var list = document.getElementById('ul');
+        var negados = [];
+
+        for (var i = 0; i < checkboxes.length; i++) {
+          console.log(checkboxes[i].value + " " + checkboxes[i].checked);
+          if(checkboxes[i].checked) console.log(atividades[i].name);
+          if(!checkboxes[i].checked) negados.push(i);
+        }
+
+        if(negados.length > 0){
+          for (var i = 0; i < negados.length; i++) {
+            atividades.splice(negados[i] - i,1);
+          }
+        }
+
+        for( let i = 0; i < atividades.length; i++){
+          var item = document.createElement('li');
+          var checkBox = document.createElement("input");
+          var label = document.createElement("label");
+
+          checkBox.type = "checkbox";
+          checkBox.value = atividades[i].name;
+
+          item.appendChild(checkBox);
+          item.appendChild(document.createTextNode("  "+atividades[i].name));
+          list.appendChild(item);          
+        }
+      }
+
+      const aceitarHeader = async () => {
+        nomeP = document.getElementById('title').value;
+        autorP = document.getElementById('author').value;
+        versaoP = document.getElementById('version').value;
+        var descriçãoP = document.getElementById('description').value;
+
+        var currentdate = new Date(); 
+        var datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+
+        if(nomeP != '' && autorP != ''){
+          
+          console.log(nomeP);
+          console.log(autorP);
+          console.log(versaoP);
+          console.log(descriçãoP);
+
+          var processInfoElem = bpdl.createElement("ProcessoInfo");
+
+          var nomeElem = bpdl.createElement("Nome");
+          nomeElem.innerHTML = nomeP;
+          processInfoElem.appendChild(nomeElem);
+
+          var autorElem = bpdl.createElement("Autor");
+          autorElem.innerHTML = autorP;
+          processInfoElem.appendChild(autorElem);
+
+          var versaoElem = bpdl.createElement("Versão");
+          versaoElem.innerHTML = versaoP;
+          processInfoElem.appendChild(versaoElem);
+
+          var dataElem = bpdl.createElement("Data");
+          dataElem.innerHTML = datetime;
+          processInfoElem.appendChild(dataElem);
+
+          var descricaoElem = bpdl.createElement("Descrição");
+          descricaoElem.innerHTML = descriçãoP;
+          processInfoElem.appendChild(descricaoElem);
+
+          processElem.appendChild(processInfoElem);
+
+          console.log(bpdl.documentElement.innerHTML);
+
+          console.log(ativ);
+
+          //const ativ = await parseFile(document.getElementById('input').files[0]);
+
+          console.log(ativ[0]);
+          console.log(ativ[0].getAttribute("Id"));
+
+          document.getElementById('popupForm').innerHTML=
+          '<h1>Publicação</h1>'+
+          '<p>Selecione as atividades que quer publicar</p>' +
+          '<ul id="ul">'+
+          '</ul>'+
+          '<button type="submit" class="btn" onclick="aceitarAtividades()">Seguinte</button>'+
+          '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+
+          var list = document.getElementById('ul');
+          var popupForm = document.getElementById('popupForm');
+
+          for( let i = 0; i < ativ.length; i++){
+            var n = ativ[i];
+
+            if(n.getAttribute("Name") != ""){
+              ativId = n.getAttribute("Id");
+              ativName = n.getAttribute("Name");
+
+              console.log(i);
+              console.log(ativId);
+              console.log(ativName);
+
+              atividades.push({
+                  id: ativId,
+                  name: ativName,
+                  public: false
+              });
+
+              var item = document.createElement('li');
+              var checkBox = document.createElement("input");
+              var label = document.createElement("label");
+
+              checkBox.type = "checkbox";
+              checkBox.value = ativName;
+
+              // popupForm.appendChild(checkBox);
+              // popupForm.appendChild(label);
+              // label.appendChild(document.createTextNode(ativName));
+
+              item.appendChild(checkBox);
+              item.appendChild(document.createTextNode("  "+ativName));
+              list.appendChild(item);
+              
+              
+            }
+          }
+
+        } 
+      }
+
+             
+
+
+      function getFile(){
+        document.getElementById('input').click();
+        //document.getElementById("xmlForm").submit();
+      }
+
+      document.getElementById('input').onchange = function() {
+        document.getElementById("nome_xpdl").innerHTML=document.getElementById('input').files[0].name;
+        //alert(document.getElementById('input').files[0].name);
+        document.getElementById("myForm").style.display = "block";
+        
+        //document.getElementById('input').submit();
+      };
+
       var toDoButton = document.getElementById("addToDo");
       toDoButton.addEventListener("click", function() {
         KanbanTest.addElement("_todo", {
@@ -423,6 +784,7 @@
           }
         ]);
       });
+
     </script>
     <script>
     populateWithProcesses();

@@ -1,0 +1,29 @@
+<Processo>
+    <ProcessoInfo>
+        <Nome>Modelo Saude</Nome>
+        <Autor>Luciane Meconi</Autor>
+        <Versão>1.0</Versão>
+        <Data>13/1/2021 @ 18:34:42</Data>
+        <Descrição>Modelo Saude</Descrição>
+    </ProcessoInfo>
+    <Atividades>
+        <Atividade nome="Procurar atendimento médico" id="003f940c-8d26-4edc-aa4b-e82633a8b4d5" público="true"/>
+        <Atividade nome="Tempo de Resultado/Risco" id="c068f870-05fb-4511-b259-1a2d8b7916cb" público="false"/>
+        <Atividade nome="Risco Baixo" id="579844cf-9423-4c0a-8459-e804c68cda80" público="false"/>
+        <Atividade nome="Risco Médio" id="ca16d2c9-0eca-453d-a2ce-7473385b0400" público="false"/>
+        <Atividade nome="Risco Alto" id="fbd8bb62-5035-4372-8f50-091d481ba6a7" público="false"/>
+        <Atividade nome="Processar resultado" id="e0a6570c-0e83-4ebe-b791-8214fff36720" público="false"/>
+        <Atividade nome="Encerra laboratório" id="158f7eed-9301-4798-ab39-4c12b004a4c5" público="false"/>
+        <Atividade nome="Realizar consulta" id="8b95a023-a7a4-4ddd-a028-68966b3901b9" público="false"/>
+        <Atividade nome="Grau de Risco" id="260d0e7f-c3ab-4f07-960e-7ecb35e435d9" público="false"/>
+        <Atividade nome="Nível Hospitalar" id="b5141941-7e3e-45e0-be38-28f1d9db70f4" público="false"/>
+        <Atividade nome="Nível Ambulatório" id="5554b605-dde1-4d84-8ef7-f142550b4209" público="false"/>
+        <Atividade nome="Finaliza Processo" id="fc754b89-2553-4b05-8aef-5e7cd14dbc13" público="false"/>
+        <Atividade nome="Necessita exame laboratorial" id="7ad06dd1-2440-4201-bcae-5d5d61443a82" público="false"/>
+        <Atividade nome="Buscar Laboratório" id="37f44bd3-1c89-411f-87d0-93e886103262" público="true"/>
+        <Atividade nome="Encerra Consulta" id="654a5db5-2644-492a-b390-fa2a64e716ff" público="false"/>
+        <Atividade nome="Receber resultado" id="cc0263ff-f608-495d-84d7-c43ef312dbcb" público="true"/>
+        <Atividade nome="Analisar resultado" id="dafc0e9b-63be-427e-bf09-bcf3211ecc74" público="false"/>
+        <Atividade nome="Encerra  análise de exame laboratorial" id="1f833e3d-480d-40bc-9083-0c4bcd9130d2" público="false"/>
+    </Atividades>
+</Processo>

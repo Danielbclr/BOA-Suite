@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>BOA</title>
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+    
+    <link href="vendor/material-kit/css/material-kit.css?v=2.0.5" rel="stylesheet"/>
+    
+    <link rel="stylesheet" href="vendor/jkanban/jkanban.min.css" />
+
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <script src="./process.js"></script>
+    <script src="./services.js"></script>
+    <script src="./compose.js"></script>
+    <script src="./search.js"></script>
+    <script src="./boards.js"></script>
+    <script src="./discover.js"></script>
+    <script src="./server.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script>
+
+    
+
+    <style>
+      body {
+        font-family: "Lato";
+        margin: 0;
+        padding: 0;
+      }
+
+      #myKanban {
+        overflow-x: auto;
+        padding: 20px 0;
+      }
+
+      .success {
+        background: #00b961;
+      }
+
+      .info {
+        background: #2a92bf;
+      }
+
+      .warning {
+        background: #f4ce46;
+      }
+
+      .error {
+        background: #fb7d44;
+      }
+    </style>
+  </head>
+  <body>
+
+      <nav class="navbar navbar-expand-lg bg-primary">
+        <div class="container">
+          <div class="navbar-translate">
+            <a class="navbar-brand" href="#0">BOA</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="navbar-toggler-icon"></span>
+              <span class="navbar-toggler-icon"></span>
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+              <li class="active nav-item">
+                <a href="#" class="nav-link">
+                  <i class="material-icons">home</i> Home
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    <div id="myKanban"></div>
+
+
+	<div class="input-group mb-3">
+	  <div class="input-group-prepend">
+	    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+	  </div>
+	  <div class="custom-file">
+      <form id="xmlForm" name="xmlForm" enctype="multipart/form-data">
+          <input id="input" type="file" accept=".xpdl" name="file"> <input type="submit">
+    	</form>
+	  </div>
+  </div>
+
+  
+
+  <form method="post" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <input type="submit" />
+  </form>
+
+
+	<script>
+	  const fileSelector = document.getElementById('file');
+	  fileSelector.addEventListener('change', (event) => {
+	    const fileList = event.target.files;
+	    console.log(fileList);
+	  });
+	</script>
+
+	<script>
+    
+    // var formDataFile = new FormData();
+    // formDataFile.append('file', document.getElementById('input').files[0]);
+    // var form = new FormData(document.getElementById('input').files[0]);
+    //var fileUp = document.getElementById('input').files[0];
+
+    //TENTATIVA USANDO AJAX
+    //*
+    function sendAjax( dataS){
+      var formData = new FormData();
+      formData.append('file', dataS);
+
+      $.ajax({
+          url: '/',
+          data: formData,
+          contentType: false,
+          processData: false,
+          type: 'POST',
+          'success':function(data){
+              alert(data);
+          }
+      });
+    }
+    //*/
+
+    //*
+    //TENTATIVA USANDO POST
+    function sendPost( dataS){
+      var form = req.form();
+      form.append('file', dataS);
+
+      const request = require('request');
+      
+      var req = request.post('/', function (err, resp, body) {
+      if (err) {
+        console.log('Error!');
+      } else {
+        console.log('URL: ' + body);
+      }
+    });
+    
+    }
+       //*/
+  //*
+  //TENTATIVA USANDO FETCH
+    function sendFetch( dataS){
+      var formData = new FormData();
+      formData.append('file', dataS);
+
+      fetch('/',{
+        method: "POST",
+        body: dataS
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.path)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    }//*/
+
+       var readXml=null;
+       $('#xmlForm').submit(function(event) {
+         
+        $.get('/ajax', function(data, status){
+          console.log(data);
+        })
+
+        console.log("Imprimindo atividade");
+        event.preventDefault();
+        var selectedFile = document.getElementById('input').files[0];     
+
+        console.log(selectedFile);
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            // console.log(e);
+            // console.log(typeof e);
+
+            // console.log(e.target);
+            // console.log(typeof e.target);
+
+            // console.log(e.target.result);
+            // console.log(typeof e.target.result);
+
+            readXml=e.target.result;
+            console.log(readXml);
+
+            sendAjax(selectedFile);
+
+            var fileName = selectedFile.name.slice(0, -5);
+            console.log(fileName)
+
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(readXml, "application/xml");
+            console.log(doc);
+            console.log(typeof readXml);
+            console.log(typeof doc);
+
+            var nodes = doc.getElementsByTagName("Activity");
+            console.log(nodes[0]);
+            console.log(nodes[0].getAttribute("Id"));
+
+      console.log(process.length + 1)
+            var novoModelo=
+            {
+          header: {
+              process_id: String(process.length + 1),
+              name: fileName,
+              description: "Diagrama 1",
+              author: "Luciane Meconi",
+          },
+          steps:[]
+      }
+
+      var step = {
+              id: "",
+              name: "",
+              boa: false
+          };
+
+          for( let i = 0; i < nodes.length; i++){
+            var n = nodes[i];
+
+            if(n.getAttribute("Name") != ""){
+              step.id = n.getAttribute("Id");
+              step.name = n.getAttribute("Name");
+
+              console.log(i);
+              console.log(step.id);
+              console.log(step.name);
+
+              novoModelo.steps.push({
+                  id: n.getAttribute("Id"),
+                  name: n.getAttribute("Name"),
+                  boa: false
+              }
+              );
+
+              console.log(novoModelo.steps[i]);
+              console.log(novoModelo);
+              console.log("================");
+            }
+
+          }
+
+          console.log("Finalizou parse");
+
+          console.log(novoModelo);
+          console.log(process[0]);
+
+          process.push(novoModelo);
+
+          console.log(novoModelo);
+
+            alert("Publicando processos");
+
+
+          clearBoard();
+          clearDiscover();
+
+          populateWithProcesses();
+
+
+        }
+        reader.readAsText(selectedFile);
+
+       });
+
+       
+
+    </script>
+
+    <script src="vendor/jkanban/jkanban.min.js"></script>
+    
+    <script>
+      
+      console.log(boards)
+      var boards2 = boards;
+      var KanbanTest = new jKanban({
+        element: "#myKanban",
+        widthBoard: '450px',
+        responsivePercentage: true,  
+        dragBoards: false,
+        dragItems: false,
+
+        click: function(el) {
+          console.log("Trigger on all items click!");
+          console.log(el);
+          if(el.getAttribute('data-process_id') != null){
+            console.log(el.getAttribute('data-process_id'));
+            console.log(getProcessById(el.getAttribute('data-process_id')));
+
+            clearBoard();
+            clearDiscover();
+
+            populateWithProcesses();
+            populateCompositionListWithProcess(getProcessById(el.getAttribute('data-process_id')), services);
+            populateProcessListWithProcess(getProcessById(el.getAttribute('data-process_id')), services);
+            decorateList();
+            
+          }
+          if(el.getAttribute('data-wsdl') != null){
+            console.log(el.getAttribute('data-wsdl'));
+            window.open(el.getAttribute('data-wsdl'));
+          }
+          
+        },
+        buttonClick: function(el, boardId) {
+          console.log(el);
+          console.log(boardId);
+          // create a form to enter element
+          var formItem = document.createElement("form");
+          formItem.setAttribute("class", "itemform");
+          formItem.innerHTML =
+            '<div class="form-group"><textarea class="form-control" rows="2" autofocus></textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button></div>';
+          KanbanTest.addForm(boardId, formItem);
+          formItem.addEventListener("submit", function(e) {
+            e.preventDefault();
+            var text = e.target[0].value;
+            KanbanTest.addElement(boardId, {
+              title: text
+            });
+            formItem.parentNode.removeChild(formItem);
+          });
+          document.getElementById("CancelBtn").onclick = function() {
+            formItem.parentNode.removeChild(formItem);
+          };
+        },
+        addItemButton: false,
+        boards: [
+        {
+          id: "_publish",
+          title: "Publicação",
+          class: "error",
+          dragTo: ["_working"],
+          item: [
+            {
+              title:
+              `
+                <form id="xmlForm" name="xmlForm" enctype="multipart/form-data">
+                    <input id="input" type="file" accept=".xpdl" name="file"> <input type="submit">
+                </form>
+              `,
+            }
+          ]
+        },
+        {
+          id: "_discover",
+          title: "Descoberta <form style=\"text-align:center; margin: 10px;\" class=\"form ml-auto\"> <div class=\"form-group\"> <input id=\"searchForm\" type=\"text\" class=\"form-control\" onkeyup=\"search()\" placeholder=\"Procurar processo...\"> </div><button type=\"submit\" class=\"btn btn-white btn-raised btn-fab btn-round\"> <i class=\"material-icons\">search</i> </button> </form>",
+          class: "warning",
+        },
+        {
+          id: "_full_process",
+          title: "Atividades do Processo",
+          class: "success",
+          dragTo: ["_working"],
+          item: []
+        },
+        {
+          id: "_compose",
+          title: "Composição de Processos Publicos",
+          class: "success",
+          dragTo: ["_working"],
+          item: []
+        }
+      ]
+      });
+      var toDoButton = document.getElementById("addToDo");
+      toDoButton.addEventListener("click", function() {
+        KanbanTest.addElement("_todo", {
+          title: "Test Add"
+        });
+      });
+
+      var addBoardDefault = document.getElementById("addDefault");
+      addBoardDefault.addEventListener("click", function() {
+        KanbanTest.addBoards([
+          {
+            id: "_default",
+            title: "Kanban Default",
+            item: [
+              {
+                title: "Default Item"
+              },
+              {
+                title: "Default Item 2"
+              },
+              {
+                title: "Default Item 3"
+              }
+            ]
+          }
+        ]);
+      });
+    </script>
+    <script>
+    populateWithProcesses();
+    decorateList();
+    
+    //var json = JSON.parse(process)
+    console.log(process.header.name);
+    console.log(document.querySelectorAll("[data-process]"));
+    hideAll();
+
+
+
+    
+    var list = document.getElementById("myList");
+    //list.removeChild(list.childNodes[0]);
+
+    //console.log(process.getJSONObject("header").getString("author"))
+
+    </script>
+
+
+
+  </body>
+</html>
