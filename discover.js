@@ -2,7 +2,9 @@ function populateWithProcesses(){
 
     $.get('/processos', function(data, status){
         process = [];
-        process = data;
+        process = data[0];
+        services = data[1];
+
         for (let i = 0; i < process.length; i++) {
             console.log(process[i].header.name)
             KanbanTest.addElement("_discover", {

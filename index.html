@@ -339,7 +339,7 @@
           console.log(el);
           if(el.getAttribute('data-process_id') != null){
             console.log(el.getAttribute('data-process_id'));
-            console.log(getProcessById(el.getAttribute('data-process_id')));
+            // console.log(getProcessById(el.getAttribute('data-process_id')));
 
             clearBoard();
             clearDiscover();
@@ -352,7 +352,31 @@
           }
           if(el.getAttribute('data-wsdl') != null){
             console.log(el.getAttribute('data-wsdl'));
-            window.open(el.getAttribute('data-wsdl'));
+
+            
+
+            var wsdlName = el.getAttribute('data-wsdl');
+
+            $.get('/download/:'+el.getAttribute('data-wsdl'), function(data, status){
+              // window.open(data);
+              // var file = new File([data], wsdlName);
+              // var link = document.createElement("a");
+              // link.download =file.name;
+              // link.href = file;
+              // link.click();
+            })
+
+            // $.post('/download/:' + wsdlName, function(data, status){
+              
+            // })
+
+            // $.ajax({
+            //     url: "/download/" + el.getAttribute('data-wsdl'),
+            //     method: "get",
+            //     success: function(){
+            //         console.log('successful downloading');
+            //     }
+            // });
           }
           
         },
@@ -442,6 +466,15 @@
       var processElem;
       var atividades = [];
 
+      var wsdls = [];
+      var nomes = [];
+
+      var serviços = [];
+
+      var wsdl;
+
+      var ul;
+
       var nomeP;
       var autorP;
       var versaoP;
@@ -519,6 +552,97 @@
       readerP.readAsText(selectedFile);
       }
 
+      function addElement(e, ulParent, nomeAtiv){
+        var fileN = document.createElement("input");
+        var nomeN = document.createElement("input");
+        fileN.type = "file";
+
+        console.log(ulParent);
+
+        serviços.push({
+          wsdl:fileN,
+          nome:nomeN,
+          atividade:nomeAtiv
+        })
+
+        var item = document.createElement('li');
+        item.appendChild(fileN);
+        ulParent.appendChild(item);
+
+        var item = document.createElement('li');
+        item.appendChild(nomeN);
+        ulParent.appendChild(item);
+        
+        fileN.onchange = addElement;
+
+      }
+
+      function addElementE(){
+        var fileN = document.createElement("input");
+        var nomeN = document.createElement("input");
+
+        fileN.type = "file";
+        fileN.name = this.name;
+
+        ulParent = document.getElementById(this.name);
+
+        serviços.push({
+          wsdl:fileN,
+          nome:nomeN,
+          atividade:this.name
+        })
+
+        var item = document.createElement('li');
+        item.appendChild(serviços[(serviços.length - 1)].wsdl);
+        ulParent.appendChild(item);
+
+        var item = document.createElement('li');
+        item.appendChild(serviços[(serviços.length - 1)].nome);
+        ulParent.appendChild(item);
+        
+        fileN.onchange = addElementE;
+
+      }
+      function aceitarWSDLs() {
+        for( let i = 0; i < serviços.length; i++){
+          if( serviços[i].nome.value != ""){
+            // serviços.wsdl
+
+            console.log( serviços[i].wsdl.files[0]);
+            console.log( serviços[i].nome.value);
+            console.log( serviços[i].atividade);
+
+            wsdlElem = bpdl.createElement("Wsdl");
+            wsdlElem.setAttribute("nome", serviços[i].nome.value);
+            wsdlElem.innerHTML = serviços[i].wsdl.value.split(/(\\|\/)/g).pop();
+
+            console.log('[nome="'+serviços[i].atividade+'"]');
+
+            processElem.querySelector('[nome="'+serviços[i].atividade+'"]').appendChild(wsdlElem);
+
+            var formData = new FormData();
+            formData.append('file', serviços[i].wsdl.files[0]);
+
+            $.ajax({
+                url: '/',
+                data: formData,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                'success':function(data){
+                    alert(data);
+                }
+            });
+          }
+        }
+
+        document.getElementById('popupForm').innerHTML=
+          '<h1>Publicação</h1>'+
+          '<p>Aguarde enquanto a Publicação finaliza</p>';
+
+        finalizarPublicação();
+      }
+
       function aceitarAtividadesPublicas(){
 
         var atividadesPublicas = document.querySelectorAll('input[type=checkbox]');
@@ -526,13 +650,63 @@
 
         document.getElementById('popupForm').innerHTML=
           '<h1>Publicação</h1>'+
-          '<p>Aguarde enquanto a Publicação finaliza</p>';
+          '<p>Selecione os wsdls que serão enviados</p>'+
+          '<div id="lista-serviços">' +
+          '</div>' +
+          '<button type="submit" class="btn" onclick="aceitarWSDLs()">Seguinte</button>'+
+          '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+          
 
         for (var i = 0; i < atividadesPublicas.length; i++) {
           console.log(atividadesPublicas[i].value + " " + atividadesPublicas[i].checked);
           if(atividadesPublicas[i].checked){
             console.log(atividades[i].name);
             atividades[i].public = true;
+
+            var div = document.getElementById("lista-serviços");
+
+            var para = document.createElement("p");
+            var node = document.createTextNode(atividades[i].name);
+            para.appendChild(node);
+
+            div.appendChild(para);
+
+            ul = document.createElement("ul");
+            ul.setAttribute('id', atividades[i].name);
+            ul.id = atividades[i].name;
+            div.appendChild(ul);
+
+            var wsdl = document.createElement("input");
+            var nome = document.createElement("input");
+
+            wsdl.type = "file";
+            wsdl.name = atividades[i].name;
+            // wsdls.push(wsdl);
+            // nomes.push(nome);
+
+            serviços.push({
+              wsdl:wsdl,
+              nome:nome,
+              atividade: atividades[i].name
+            })
+
+            var item = document.createElement('li');
+            item.appendChild(serviços[(serviços.length - 1)].wsdl);
+            ul.appendChild(item);
+
+            var item = document.createElement('li');
+            item.appendChild(serviços[(serviços.length - 1)].nome);
+            ul.appendChild(item);
+
+            var nomeAtividade = atividades[i].name;
+
+            // wsdl.onchange = function () {
+            //   var nomeAtiv = nomeAtividade;
+            //   var 
+            //   addElement( wsdl, ul, nomeAtividade);
+            // };
+
+            wsdl.onchange = addElementE;
           }
 
           var ativElem = bpdl.createElement("Atividade");
@@ -545,6 +719,11 @@
         }
 
         processElem.appendChild(atividadesElem);
+
+        
+      }
+
+      function finalizarPublicação(){
 
         var XMLS = new XMLSerializer();
         var bpdl_xmls = XMLS.serializeToString(processElem);
@@ -587,10 +766,14 @@
         document.getElementById('popupForm').innerHTML=
           '<h1>Publicação Finalizada</h1>'+
           '<button type="submit" class="btn" onclick="refresh()">Finalizar</button>';
-        
-      }
+
+        }
+
+
 
       function refresh(){
+        document.getElementById("myForm").style.display = "none";
+
         clearBoard();
         clearDiscover();
 

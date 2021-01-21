@@ -8,14 +8,11 @@ var app = express();
 var multer  = require('multer');
 const { MulterError } = require('multer');
 
+var cors = require('cors')
+
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
-var parseString = require('xml2js').parseString;
-
-//var $ = require('jQuery'); 
-
-//app.use(busboy()); 
 app.use(express.static(path.join(__dirname, './')));
 
 app.get('*', function(req, res) {
@@ -36,32 +33,19 @@ var storage = multer.diskStorage({
       else if(file.originalname.split('.').pop() == "xpdl" ){
         cb(null, './repo/xpdl/');
       }
+      else if(file.originalname.split('.').pop() == "wsdl" ){
+        cb(null, './repo/wsdl/');
+      }
      },
      filename: function (req, file, cb) {
        cb(null, file.originalname);
      }
    });
-
-  var storageBPDL = multer.diskStorage({
-    destination: function (req, file, cbBPDL) {
-      cbBPDL(null, './repo/bpdl/');
-    },
-    filename: function (req, file, cbBPDL) {
-      cbBPDL(null, file.originalname);
-    }
-  });
    
    var upload = multer({ storage: storage });
    var uploadBPDL = multer({ storageBPDL: storageBPDL });
    
    app.use(express.static(path.join(__dirname, 'public')));
-   
-   app.post('/upload', upload.single('file'), function (req, res) {
-     var imagePath = req.file.path.replace(/^public\//, '');
-     console.log(req.file);
-     console.log(typeof req.file);
-     //res.redirect(imagePath);
-   });
 
    app.use(function( err, req, res, next){
         if( err instanceof multer,MulterError) res.status(500).send(err.message);
@@ -82,36 +66,22 @@ app.post('/', upload.single('file'), function(req, res){
      
  });
 
- app.post('/bpdl', uploadBPDL.single('file'), function(req, res){
-  console.log("Salvando arquivo");
-  console.log(req.file);
-  console.log(typeof req.file);
-  console.log(req.body);
-  console.log(typeof req.body);
-  //parseFolder();
-
-});
-
- app.get('/ajax', function(req, res) {
-     res.send('batata');
- });
-
 
  //GERENCIAR ARQUIVOS NO REPOSITORIO
  //LER TODOS OS ARQUIVOS QUANDO INICIA O SERVIDOR
   var processos = [];
+  var services = [];
+  var enviarDados = [];
+
   var readXml=null;
   var processName=null;
 
   var terminouLeitura = false;
 
-  var dirname = './public/';
+  var dirname = './repo/wsdl/';
   var diretorio = './repo/bpdl/';
 
-  function printActivities(value, name){
-    if(name != "") console.log("name = "+ name);
-    if(value != "") console.log("value = " + value);
-  }
+
 
   function parseFolder(){
     processos = [];
@@ -139,6 +109,7 @@ app.post('/', upload.single('file'), function(req, res){
           console.log('- Nome do processo: ' + processName.textContent);
 
           activities = dom.window.document.getElementsByTagName("Atividade");
+          wsdls = dom.window.document.getElementsByTagName("Wsdl");
 
           console.log(processos.length + 1)
 
@@ -176,12 +147,29 @@ app.post('/', upload.single('file'), function(req, res){
               });
             }
           }
+
+          for( let i = 0; i < wsdls.length; i++){
+            console.log( wsdls[i].getAttribute("nome"));
+
+            if( nameP != ""){
+              services.push({
+                service_id: i,
+                nome: wsdls[i].getAttribute("nome"),
+                atividade: wsdls[i].parentNode.getAttribute("nome"),
+                wsdl: wsdls[i].textContent
+              });
+            }
+          }
           console.log("terminou leitura");
           processos.push(novoModelo);
 
           if(filenames[filenames.length-1] == filename){
             console.log("Terminou leitura");
             terminouLeitura = true;
+
+            enviarDados.push(processos);
+            enviarDados.push(services);
+
             printProcessos();
           }
 
@@ -203,37 +191,43 @@ app.post('/', upload.single('file'), function(req, res){
   }
 
    parseFolder();
-  //  printProcessos();
-   
-   if(terminouLeitura){
-    printProcessos();
-   }
+
 
    app.get('/processos', function(req, res) {
-    res.send(processos);
+    enviarDados = [processos, services];
+
+    console.log(enviarDados);
+
+    res.send(enviarDados);
   });
- 
+
+  app.get('/download/:name', cors(), function(req, res){
+    var fileName = req.params.name.split(':').pop();
+    var caminho = path.join(__dirname, '/repo/wsdl', fileName);
+    var caminho2 = "./repo/wsdl/" + fileName;
+
+    console.log(caminho);
+
+    res.set("Content-Disposition", ("attachment;filename="+fileName));
+
+    // res.download(caminho2, (err) => {
+    //   if (err) {
+    //     console.log(err);
+    //     res.status(500).send({
+    //       message: "Could not download the file. " + err,
+    //     });
+    //   }
+    // });
+
+    console.log(res.headersSent);
+              
+  })
+
 
 
 app.listen(8080);
 
 console.log('Servidor rodando');
-
-// function createFile(){
-//      console.log('Criando Arquivo');
-//      fs = require('fs');
-//      fs.writeFile('helloworld.txt', 'Hello World!', function (err) { 
-//           if (err) return console.log(err);
-//           console.log('Hello World > helloworld.txt');
-//      });
-// }
-
-// console.log('Criando Arquivo');
-// fs = require('fs');
-// fs.writeFile('helloworld1.txt', 'Hello World!23123123', function (err) { 
-//      if (err) return console.log(err);
-//      console.log('Hello World > helloworld.txt');
-// });
 
 
 

@@ -2,35 +2,39 @@ function populateCompositionListWithProcess(process, services){
   // KanbanTest.addElement("_compose", {
   //   title: process.header.name,
   // });
-  for (let i = 0; i < process.steps.length; i++) {
-      if(process.steps[i].boa == true){
-        KanbanTest.addElement("_compose", {
-          id: "id",
-          title: process.steps[i].name,
-        });
-        for (let j = 0; j < services.length; j++) {
-          if(process.steps[i].name == services[j].description){
-            KanbanTest.addElement("_compose", {
-              id: "id",
-              title: services[j].name,
-              type1 : "",
-              wsdl:  services[j].wsdl
-            });
+  // $.get('/services', function(data, status){
+    // services = data;
+    for (let i = 0; i < process.steps.length; i++) {
+        if(process.steps[i].boa == true){
+          KanbanTest.addElement("_compose", {
+            id: "id",
+            title: process.steps[i].name,
+          });
+          for (let j = 0; j < services.length; j++) {
+            if(process.steps[i].name == services[j].atividade){
+              KanbanTest.addElement("_compose", {
+                id: 'id',
+                title: services[j].nome,
+                type1 : "",
+                wsdl:  services[j].wsdl
+              });
+            }
+            //console.log(process.steps[i].name);
+            //console.log(services[j].description)
+            
+            //const element = services[j];
+            
           }
-          //console.log(process.steps[i].name);
-          //console.log(services[j].description)
-          
-          //const element = services[j];
-          
         }
-      }
-  }
-  KanbanTest.addElement("_compose", {
-    id: "id",
-    title: "null",
-    type1 : ""
-  });
+    }
+    KanbanTest.addElement("_compose", {
+      id: "id",
+      title: "null",
+      type1 : ""
+    });
+  // }
 }
+
 function populateProcessListWithProcess(process, services){
   // KanbanTest.addElement("_compose", {
   //   title: process.header.name,

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/lmeconi/BOA-Suite#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dom-parser": "^0.1.6",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
