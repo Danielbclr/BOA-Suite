@@ -358,12 +358,7 @@
             var wsdlName = el.getAttribute('data-wsdl');
 
             $.get('/download/:'+el.getAttribute('data-wsdl'), function(data, status){
-              // window.open(data);
-              // var file = new File([data], wsdlName);
-              // var link = document.createElement("a");
-              // link.download =file.name;
-              // link.href = file;
-              // link.click();
+              
             })
 
             // $.post('/download/:' + wsdlName, function(data, status){
