@@ -11,8 +11,9 @@ https://www.creative-tim.com/product/material-kit
 
 https://getbootstrap.com/
 
-# Como configurar
-- Baixar e instalar o Node.js (https://nodejs.org)
+# Como configurar a 
+- Baixar e descompactar o .zip ou clonar o projeto;
+- Baixar e instalar o Node.js (https://nodejs.org);
 - Abrir o promt de comando como administrador na pasta do projeto (BOA Suíte);
 - Executar o comando "npm install";
 
