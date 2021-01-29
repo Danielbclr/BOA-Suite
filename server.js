@@ -79,7 +79,6 @@ var dirname = './repo/wsdl/';
 var diretorio = './repo/bpdl/';
 
 
-
 function parseFolder(){
 processos = [];
 var terminouLeitura = false;
@@ -202,11 +201,9 @@ app.get('/download/:name', function(req, res){
 	var fileName = req.params.name.split(':').pop();
 	var caminho = path.join(__dirname, '/repo/wsdl', fileName);
 
-	const file = `${__dirname}/repo/wsdl/`+ fileName;
+	console.log(caminho);
 
-	console.log(file);
-
-	res.download("C:/Users/Daniel Ramos/Desktop/BOA-Suite/repo/wsdl/CreditSPC.wsdl", "CreditSPC.wsdl", (err) => {
+	res.download(caminho, fileName, (err) => {
 	  if (err) {
 	    console.log(err);
 	    res.status(500).send({
@@ -219,7 +216,7 @@ app.get('/download/:name', function(req, res){
 
 let port = 8080;
 app.listen(port, () => {
-console.log(`Running at localhost:${port}`);
+	console.log(`Running at localhost:${port}`);
 });
 
 
