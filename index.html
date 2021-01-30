@@ -61,6 +61,7 @@
     </style>
   </head>
   <body>
+    <div id="hidden-div"></div>
 
       <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container">
@@ -357,21 +358,14 @@
 
             var wsdlName = el.getAttribute('data-wsdl');
 
-            $.get('/download/:'+el.getAttribute('data-wsdl'), function(data, status){
-              
-            })
+            var div = document.getElementById("hidden-div");
 
-            // $.post('/download/:' + wsdlName, function(data, status){
-              
-            // })
-
-            // $.ajax({
-            //     url: "/download/" + el.getAttribute('data-wsdl'),
-            //     method: "get",
-            //     success: function(){
-            //         console.log('successful downloading');
-            //     }
-            // });
+            var link = document.createElement('a');
+            link.setAttribute('href', './download/:' + wsdlName);
+            link.setAttribute("type", "hidden");
+            div.appendChild(link);
+            
+            link.click();
           }
           
         },
