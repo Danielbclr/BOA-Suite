@@ -7,24 +7,38 @@ function populateWithProcesses(){
 
         for (let i = 0; i < process.length; i++) {
             console.log(process[i].header.name)
+
+            var elementos = KanbanTest.getBoardElements("_discover");
+
             KanbanTest.addElement("_discover", {
                 title: process[i].header.name,
                 process: "",
                 id: "id",
+                bpdl: process[i].header.bpdl,
                 process_id: process[i].header.process_id
+            });
+
+            elementos[i].addEventListener('dblclick', function(e){
+                console.log("DOUBLE CLICK!!");
+                console.log(e);
+                console.log(this);
+
+                var bpdl = this.getAttribute('data-bpdl');
+
+                console.log(bpdl);
+
+                var div = document.getElementById("hidden-div");
+
+                var link = document.createElement('a');
+                link.setAttribute('href', './download/:' + bpdl);
+                link.setAttribute("type", "hidden");
+                div.appendChild(link);
+                
+                link.click();
             });
         }
     })
 
-    // for (let i = 0; i < process.length; i++) {
-    //     console.log(process[i].header.name)
-    //     KanbanTest.addElement("_discover", {
-    //         title: process[i].header.name,
-    //         process: "",
-    //         id: "id",
-    //         process_id: process[i].header.process_id
-    //     });
-    // }
 }
 
 function clearDiscover(){

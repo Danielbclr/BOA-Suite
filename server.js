@@ -118,6 +118,7 @@ var readXml=null;
 				author: dom.window.document.querySelector("autor").textContent,
 				date: dom.window.document.querySelector("data").textContent,
 				version: dom.window.document.querySelector("versão").textContent,
+				bpdl: filename,
 			},
 			steps:[]
 			}
@@ -137,9 +138,9 @@ var readXml=null;
 
 			if( nameP != ""){
 				novoModelo.steps.push({
-				id: idP,
-				name: nameP,
-				boa: publicP
+					id: idP,
+					name: nameP,
+					boa: publicP
 				});
 			}
 			}
@@ -149,10 +150,11 @@ var readXml=null;
 
 			if( nameP != ""){
 				services.push({
-				service_id: i,
-				nome: wsdls[i].getAttribute("nome"),
-				atividade: wsdls[i].parentNode.getAttribute("nome"),
-				wsdl: wsdls[i].textContent
+					service_id: i,
+					nome: wsdls[i].getAttribute("nome"),
+					atividade: wsdls[i].parentNode.getAttribute("nome"),
+					wsdl: wsdls[i].textContent,
+					processo: novoModelo.header.name
 				});
 			}
 			}
@@ -199,7 +201,13 @@ app.get('/processos', function(req, res) {
 
 app.get('/download/:name', function(req, res){
 	var fileName = req.params.name.split(':').pop();
-	var caminho = path.join(__dirname, '/repo/wsdl', fileName);
+	var extensao;
+
+	if( fileName.split('.').pop() == "bpdl" ) extensao = "bpdl";
+	else if(fileName.split('.').pop() == "xpdl") extensao = "xpdl";
+	else extensao = "wsdl"
+
+	var caminho = path.join(__dirname, '/repo/', extensao, fileName);
 
 	console.log(caminho);
 

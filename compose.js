@@ -11,12 +11,13 @@ function populateCompositionListWithProcess(process, services){
             title: process.steps[i].name,
           });
           for (let j = 0; j < services.length; j++) {
-            if(process.steps[i].name == services[j].atividade){
+            if( (process.steps[i].name == services[j].atividade) && (process.header.name == services[j].processo) ){
               KanbanTest.addElement("_compose", {
                 id: 'id',
                 title: services[j].nome,
                 type1 : "",
-                wsdl:  services[j].wsdl
+                wsdl:  services[j].wsdl,
+                processo: services[j].processo
               });
             }
             //console.log(process.steps[i].name);

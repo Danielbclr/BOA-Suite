@@ -566,9 +566,23 @@
 
       }
 
+	function fazerRequired() {
+		if(this.value != "") serviços[parseInt(this.id)].wsdl.required = true;
+		else serviços[parseInt(this.id)].wsdl.required = false;
+
+		console.log(this.value);
+		console.log(serviços[parseInt(this.id)].wsdl.required);
+	}
+
       function addElementE(){
         var fileN = document.createElement("input");
         var nomeN = document.createElement("input");
+
+        if(this.files[0] != null) serviços[parseInt(this.id)].nome.required = true;
+		else serviços[parseInt(this.id)].nome.required = false;
+		
+		console.log(this.files[0]);
+		console.log(serviços[parseInt(this.id)].nome.required);
 
         fileN.type = "file";
         fileN.name = this.name;
@@ -581,18 +595,32 @@
           atividade:this.name
         })
 
-        var item = document.createElement('li');
-        item.appendChild(serviços[(serviços.length - 1)].wsdl);
-        ulParent.appendChild(item);
+        // var item = document.createElement('li');
+        // item.appendChild(serviços[(serviços.length - 1)].wsdl);
+        // ulParent.appendChild(item);
 
-        var item = document.createElement('li');
-        item.appendChild(serviços[(serviços.length - 1)].nome);
-        ulParent.appendChild(item);
+        // var item = document.createElement('li');
+        // item.appendChild(serviços[(serviços.length - 1)].nome);
+		// ulParent.appendChild(item);
+		
+		ulParent.appendChild(serviços[(serviços.length - 1)].wsdl);
+		ulParent.appendChild(serviços[(serviços.length - 1)].nome);
         
         fileN.onchange = addElementE;
 
       }
+
       function aceitarWSDLs() {
+
+		for( let i = 0; i < serviços.length; i++){
+			console.log( (serviços[i].nome.required || serviços[i].wsdl.required) && (serviços[i].nome.value == "" || serviços[i].wsdl.files[0] == null) );
+			console.log( serviços[i].nome.required);
+			console.log( serviços[i].wsdl.required == true);
+			console.log( (serviços[i].nome.value == "" || serviços[i].wsdl.files[0] == null) );
+			if( (serviços[i].nome.required || serviços[i].wsdl.required) && (serviços[i].nome.value == "" || serviços[i].wsdl.files[0] == null) ) return;
+		}
+
+				
         for( let i = 0; i < serviços.length; i++){
           if( serviços[i].nome.value != ""){
             // serviços.wsdl
@@ -640,6 +668,7 @@
         document.getElementById('popupForm').innerHTML=
           '<h1>Publicação</h1>'+
           '<p>Selecione os wsdls que serão enviados</p>'+
+          '<p>Selecione um arquivo e digite um nome para cada wsdl</p>'+
           '<div id="lista-serviços">' +
           '</div>' +
           '<button type="submit" class="btn" onclick="aceitarWSDLs()">Seguinte</button>'+
@@ -660,8 +689,8 @@
 
             div.appendChild(para);
 
-            ul = document.createElement("ul");
-            ul.setAttribute('id', atividades[i].name);
+            ul = document.createElement("div");
+            // ul.setAttribute('id', atividades[i].name);
             ul.id = atividades[i].name;
             div.appendChild(ul);
 
@@ -670,6 +699,7 @@
 
             wsdl.type = "file";
             wsdl.name = atividades[i].name;
+
             // wsdls.push(wsdl);
             // nomes.push(nome);
 
@@ -679,13 +709,18 @@
               atividade: atividades[i].name
             })
 
-            var item = document.createElement('li');
-            item.appendChild(serviços[(serviços.length - 1)].wsdl);
-            ul.appendChild(item);
+            serviços[(serviços.length - 1)].wsdl.id = (serviços.length - 1);
+            serviços[(serviços.length - 1)].nome.id = (serviços.length - 1);
 
-            var item = document.createElement('li');
-            item.appendChild(serviços[(serviços.length - 1)].nome);
-            ul.appendChild(item);
+            // var item = document.createElement('li');
+            // item.appendChild(serviços[(serviços.length - 1)].wsdl);
+            // ul.appendChild(item);
+            ul.appendChild(serviços[(serviços.length - 1)].wsdl);
+
+            // var item = document.createElement('li');
+            // item.appendChild(serviços[(serviços.length - 1)].nome);
+            // ul.appendChild(item);
+            ul.appendChild(serviços[(serviços.length - 1)].nome);
 
             var nomeAtividade = atividades[i].name;
 
@@ -696,6 +731,7 @@
             // };
 
             wsdl.onchange = addElementE;
+            nome.onchange = fazerRequired;
           }
 
           var ativElem = bpdl.createElement("Atividade");
