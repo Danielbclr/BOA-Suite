@@ -130,19 +130,19 @@ var readXml=null;
 			};
 
 			for( let i = 0; i < activities.length; i++){
-			console.log( activities[i].getAttribute("nome"));
+				console.log( activities[i].getAttribute("nome"));
 
-			var nameP = activities[i].getAttribute("nome");
-			var idP = activities[i].getAttribute("id");
-			var publicP = activities[i].getAttribute("público") == "true"? true : false;
+				var nameP = activities[i].getAttribute("nome");
+				var idP = activities[i].getAttribute("id");
+				var publicP = activities[i].getAttribute("público") == "true"? true : false;
 
-			if( nameP != ""){
-				novoModelo.steps.push({
-					id: idP,
-					name: nameP,
-					boa: publicP
-				});
-			}
+				if( nameP != ""){
+					novoModelo.steps.push({
+						id: idP,
+						name: nameP,
+						boa: publicP
+					});
+				}
 			}
 
 			for( let i = 0; i < wsdls.length; i++){

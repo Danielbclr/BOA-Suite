@@ -531,6 +531,7 @@
           var nodes = doc.getElementsByTagName("Activity");
           console.log(nodes[0]);
           console.log(nodes[0].getAttribute("Id"));
+                  
 
           console.log(nodes);
 
@@ -606,19 +607,19 @@
 		ulParent.appendChild(serviços[(serviços.length - 1)].wsdl);
 		ulParent.appendChild(serviços[(serviços.length - 1)].nome);
         
-        fileN.onchange = addElementE;
+      fileN.onchange = addElementE;
 
+    }
+
+    function aceitarWSDLs() {
+
+      for( let i = 0; i < serviços.length; i++){
+        console.log( (serviços[i].nome.required || serviços[i].wsdl.required) && (serviços[i].nome.value == "" || serviços[i].wsdl.files[0] == null) );
+        console.log( serviços[i].nome.required);
+        console.log( serviços[i].wsdl.required == true);
+        console.log( (serviços[i].nome.value == "" || serviços[i].wsdl.files[0] == null) );
+        if( (serviços[i].nome.required || serviços[i].wsdl.required) && (serviços[i].nome.value == "" || serviços[i].wsdl.files[0] == null) ) return;
       }
-
-      function aceitarWSDLs() {
-
-		for( let i = 0; i < serviços.length; i++){
-			console.log( (serviços[i].nome.required || serviços[i].wsdl.required) && (serviços[i].nome.value == "" || serviços[i].wsdl.files[0] == null) );
-			console.log( serviços[i].nome.required);
-			console.log( serviços[i].wsdl.required == true);
-			console.log( (serviços[i].nome.value == "" || serviços[i].wsdl.files[0] == null) );
-			if( (serviços[i].nome.required || serviços[i].wsdl.required) && (serviços[i].nome.value == "" || serviços[i].wsdl.files[0] == null) ) return;
-		}
 
 				
         for( let i = 0; i < serviços.length; i++){
@@ -913,13 +914,17 @@
           for( let i = 0; i < ativ.length; i++){
             var n = ativ[i];
 
-            if(n.getAttribute("Name") != ""){
+            route = n.getElementsByTagName('Route');
+
+            if(n.getAttribute("Name") != "" && route.length == 0){
               ativId = n.getAttribute("Id");
               ativName = n.getAttribute("Name");
 
               console.log(i);
               console.log(ativId);
               console.log(ativName);
+              console.log(route);
+              if(route.length > 0) console.log(route[0].getAttribute('MarkerVisible'))
 
               atividades.push({
                   id: ativId,
