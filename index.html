@@ -915,8 +915,9 @@
             var n = ativ[i];
 
             route = n.getElementsByTagName('Route');
+            event = n.getElementsByTagName('Event');
 
-            if(n.getAttribute("Name") != "" && route.length == 0){
+            if(n.getAttribute("Name") != "" && route.length == 0 && event.length == 0){
               ativId = n.getAttribute("Id");
               ativName = n.getAttribute("Name");
 
