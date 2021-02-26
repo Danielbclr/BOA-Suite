@@ -124,14 +124,9 @@
     </form>
   </div>
 
-  <div class="form-popup" id="myForm2">
-    <form id='popupForm2' class="form-container">
-      <h1>Publicação</h1>
-
-      <p id='popupForm_p2'>Selecione as atividades que quer publicar</p>
-
-      <button type="submit" class="btn" onclick="aceitarXpdl()">Aceitar</button>
-      <button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>
+  <div class="form-popup" id="div-header" >
+    <form id='form-header' class="form-container">
+      
     </form>
   </div>
 
@@ -395,7 +390,7 @@
         {
           id: "_publish",
           title: "Publicação",
-          class: "error",
+          class: "publicação",
           dragTo: ["_working"],
           item: [
             {
@@ -426,19 +421,19 @@
         {
           id: "_discover",
           title: "Descoberta <form style=\"text-align:center; margin: 10px;\" class=\"form ml-auto\"> <div class=\"form-group\"> <input id=\"searchForm\" type=\"text\" class=\"form-control\" onkeyup=\"search()\" placeholder=\"Procurar processo...\"> </div><button type=\"submit\" class=\"btn btn-white btn-raised btn-fab btn-round\"> <i class=\"material-icons\">search</i> </button> </form>",
-          class: "warning",
+          class: "descoberta",
         },
         {
           id: "_full_process",
           title: "Atividades do Processo",
-          class: "success",
+          class: "atividades",
           dragTo: ["_working"],
           item: []
         },
         {
           id: "_compose",
           title: "Composição de Processos Publicos",
-          class: "success",
+          class: "composição",
           dragTo: ["_working"],
           item: []
         }
@@ -467,6 +462,7 @@
       var nomeP;
       var autorP;
       var versaoP;
+      var nomeXpdl;
 
       $('#xmlForm').submit(function(event) {
         //event.preventDefault();
@@ -889,6 +885,10 @@
           descricaoElem.innerHTML = descriçãoP;
           processInfoElem.appendChild(descricaoElem);
 
+          var xpdlElem = bpdl.createElement("Xpdl");
+          xpdlElem.innerHTML = nomeXpdl;
+          processInfoElem.appendChild(xpdlElem);
+
           processElem.appendChild(processInfoElem);
 
           console.log(bpdl.documentElement.innerHTML);
@@ -964,7 +964,8 @@
       }
 
       document.getElementById('input').onchange = function() {
-        document.getElementById("nome_xpdl").innerHTML=document.getElementById('input').files[0].name;
+        document.getElementById("nome_xpdl").innerHTML = document.getElementById('input').files[0].name;
+        nomeXpdl = document.getElementById('input').files[0].name;
         //alert(document.getElementById('input').files[0].name);
         document.getElementById("myForm").style.display = "block";
         

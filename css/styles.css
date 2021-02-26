@@ -11,6 +11,27 @@
 
 * {box-sizing: border-box;}
 
+#myKanban {
+  overflow-x: auto;
+  padding: 20px 0;
+}
+
+.descoberta {
+  background: #a14c8cb9;
+}
+
+.publicação {
+  background: #d37448;
+}
+
+.atividades {
+  background: #ffcc12;
+}
+
+.composição {
+  background: #53ce53;
+}
+
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
   background-color: #555;
@@ -95,3 +116,18 @@ textarea {
   opacity: 1;
 }
 
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: auto;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
