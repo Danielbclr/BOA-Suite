@@ -66,22 +66,13 @@
       <nav class="navbar navbar-expand-lg bg-primary">
         <div class="container">
           <div class="navbar-translate">
-            <a class="navbar-brand" href="#0">BOA</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="#0" style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size:x-large;">BOA Suite</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="true" aria-label="Toggle navigation" style="font-family: 'Times New Roman', Times, serif;">
               <span class="sr-only">Toggle navigation</span>
               <span class="navbar-toggler-icon"></span>
               <span class="navbar-toggler-icon"></span>
               <span class="navbar-toggler-icon"></span>
             </button>
-          </div>
-          <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-              <li class="active nav-item">
-                <a href="#" class="nav-link">
-                  <i class="material-icons">home</i> Home
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
       </nav>
@@ -441,8 +432,14 @@
       });
 
       function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-        document.getElementById('xmlForm').reset();
+        //var inputForm = $("input");
+        var inputForm = document.getElementById('input').value = '';
+
+        //inputForm.replaceWith( inputForm.val('').clone( true ) );
+
+        //document.getElementById('popupForm').innerHTML='';
+
+        document.getElementById("myForm").style.display = "none";        
       }
 
       var ativ;
@@ -537,6 +534,18 @@
         }
       readerP.readAsText(selectedFile);
       }
+
+      //FUNCAO PARA BOTAO SELECIONAR TODOS
+      $(document).ready(function () {
+        $('body').on('click', '#selectAll', function () {
+          if ($(this).hasClass('allChecked')) {
+              $('input[type="checkbox"]', '#ul').prop('checked', false);
+          } else {
+              $('input[type="checkbox"]', '#ul').prop('checked', true);
+          }
+          $(this).toggleClass('allChecked');
+        })
+      });
 
       function addElement(e, ulParent, nomeAtiv){
         var fileN = document.createElement("input");
@@ -664,8 +673,10 @@
 
         document.getElementById('popupForm').innerHTML=
           '<h1>Publicação</h1>'+
-          '<p>Selecione os wsdls que serão enviados</p>'+
-          '<p>Selecione um arquivo e digite um nome para cada wsdl</p>'+
+          '<p>Selecione as interfaces de processo (WSDL) que serão enviadass</p>'+
+          '<p>Para cada item insira um arquivo WSDL e o nome do serviço representado</p>' +
+          '<p>Para cada arquivo selecionado uma nova linha referente a um novo serviço associado a mesma atividade aparecerá </p>' +
+          '<p>Caso não utilizar alguma linha deixe ambos campos de arquivo e nome referentes a esta linha vazios </p>' +
           '<div id="lista-serviços">' +
           '</div>' +
           '<button type="submit" class="btn" onclick="aceitarWSDLs()">Seguinte</button>'+
@@ -745,6 +756,7 @@
         
       }
 
+      //ULTIMO PASSO DA PUBLICACAO
       function finalizarPublicação(){
 
         var XMLS = new XMLSerializer();
@@ -808,6 +820,7 @@
         document.getElementById('popupForm').innerHTML=
           '<h1>Publicação</h1>'+
           '<p>Selecione quais atividades são publicas</p>' +
+          '<button type="button" id="selectAll" class="main"> <span class="sub"></span>Selecionar Todos</button>' +
           '<ul id="ul">'+
           '</ul>'+
           '<button type="submit" class="btn" onclick="aceitarAtividadesPublicas()">Seguinte</button>'+
@@ -903,6 +916,7 @@
           document.getElementById('popupForm').innerHTML=
           '<h1>Publicação</h1>'+
           '<p>Selecione as atividades que quer publicar</p>' +
+          '<button type="button" id="selectAll" class="main"> <span class="sub"></span>Selecionar Todos</button>' +
           '<ul id="ul">'+
           '</ul>'+
           '<button type="submit" class="btn" onclick="aceitarAtividades()">Seguinte</button>'+
@@ -963,11 +977,26 @@
         //document.getElementById("xmlForm").submit();
       }
 
+      //Abre o popup
       document.getElementById('input').onchange = function() {
-        document.getElementById("nome_xpdl").innerHTML = document.getElementById('input').files[0].name;
+        var inputForm = document.getElementById('input');
+
+        if( inputForm.value != null){
+
+          document.getElementById('popupForm').innerHTML=
+          '<h1>Publicação</h1>'+
+          '<p>Deseja publicar o seguinte .xpdl?</p>' +
+          '<p>'+ inputForm.files[0].name +'</p>'+
+
+          '<button type="submit" class="btn" onclick="aceitarXpdl()">Seguinte</button>'+
+          '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+
+          document.getElementById("myForm").style.display = "block";
+
+        }
         nomeXpdl = document.getElementById('input').files[0].name;
         //alert(document.getElementById('input').files[0].name);
-        document.getElementById("myForm").style.display = "block";
+        
         
         //document.getElementById('input').submit();
       };

@@ -32,6 +32,7 @@
   background: #53ce53;
 }
 
+
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
   background-color: #555;
@@ -57,6 +58,7 @@
   z-index: 9;
   max-height: 800px;
   overflow: auto;
+  resize: ;
   
 }
 
@@ -76,6 +78,18 @@
   margin: 5px 0 22px 0px;
   border: none;
   background: #f1f1f1;
+}
+
+.kanban-item{
+  cursor: pointer;
+}
+
+.item_handle{
+  cursor: progress;
+}
+
+.drag_handler{
+  cursor: progress;
 }
 
 textarea {
