@@ -1,5 +1,5 @@
 .width80 {
-    width: 80%;
+    width: auto;
     text-align:center;
     margin-left: auto;
     margin-right: auto;
@@ -12,24 +12,25 @@
 * {box-sizing: border-box;}
 
 #myKanban {
-  overflow-x: auto;
+  overflow: auto;
   padding: 20px 0;
+  width: auto;
 }
 
 .descoberta {
-  background: #a14c8cb9;
+  background: #dde02cd2;
 }
 
 .publicação {
-  background: #d37448;
+  background: #f0720cb2;
 }
 
 .atividades {
-  background: #ffcc12;
+  background: #4ad61fa8;
 }
 
 .composição {
-  background: #53ce53;
+  background: #1ad8cea8;
 }
 
 
@@ -52,24 +53,50 @@
 .form-popup {
   display: none;
   position: fixed;
-  top: 60px;
-  right: 450px;
+  top: 80px;
   border: 3px solid #f1f1f1;
   z-index: 9;
-  max-height: 800px;
-  overflow: auto;
-  resize: ;
-  
+  text-align:justify;
+  resize:none;
+  max-height: calc(100vh - 210px);
+  max-height: calc(100vh - 210px);  
+}
+
+#myFormHeader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #f0720cb2;
+  color: #fff;
 }
 
 /* Add styles to the form container */
 .form-container {
-  max-width: 600px;
-  max-height: 800px;
+  
+  max-width: 700px;
+  max-height: 700px;
   padding: 20px;
   background-color: white;
   overflow: auto;
 }
+
+.form-container input[type=file]{
+  width: 100px;
+  border: none;
+  background: #f1f1f1;
+  margin-right: 15px;
+}
+
+.nome-interface{
+  padding-top: 16px;
+  margin-bottom: 4px; 
+  font-size: 16px;
+}
+
+.form-container label{
+  padding-right: 15px;
+}
+
 
 /* Full-width input fields */
 .form-container input[type=text], .form-container input[type=password] {
