@@ -5,7 +5,8 @@
         <Versão>1.0</Versão>
         <Data>13/1/2021 @ 17:58:29</Data>
         <Descrição>Processo que modela o funcionamento de uma loja desde o ato da venda de um produto até sua entrega ao cliente.</Descrição>
-    </ProcessoInfo>
+	<Xpdl/>    
+</ProcessoInfo>
     <Atividades>
         <Atividade nome="Analisar pedido" id="b57b2a38-3333-4ea6-9fa5-687aac337ea2" público="false"/>
         <Atividade nome="Analisar crédito" id="3a43aab3-eb9b-4211-99cd-9fecd7462ead" público="true"/>

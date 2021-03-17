@@ -13,7 +13,7 @@ function populateWithProcesses(){
             KanbanTest.addElement("_discover", {
                 title: process[i].header.name,
                 process: "",
-                id: "id",
+                id: "discover-item-"+i,
                 bpdl: process[i].header.bpdl,
                 process_id: process[i].header.process_id,
                 index: i
@@ -105,12 +105,12 @@ function baixarBPDL(bpdl){
 
 function baixarXPDL(xpdl){
 
+    console.log(xpdl);
+
     if( xpdl == "undefined" ){
         alert("O Processo em questão não possui um XPDL"); 
         return;
     }
-
-    console.log(xpdl);
 
     var div = document.getElementById("hidden-div");
 
@@ -118,14 +118,19 @@ function baixarXPDL(xpdl){
     link.setAttribute('href', './download/:' + xpdl);
     link.setAttribute("type", "hidden");
     div.appendChild(link);
+
+    link.click();  
                 
 
 }
 
 function clearDiscover(){
 
-	for (let i = 0; i < KanbanTest.getBoardElements("_discover").length+8; i++) {
-    	KanbanTest.removeElement("id")
+    var discoverLength = KanbanTest.getBoardElements("_discover").length;
+
+	for (let i = 0; i < discoverLength; i++) {
+    	KanbanTest.removeElement("discover-item"+i)
   	}
 
+    //   while( KanbanTest.getBoardElements("_discover").length > 0) KanbanTest.removeElement("id");
 }

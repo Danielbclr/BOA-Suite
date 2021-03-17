@@ -376,9 +376,9 @@
             // console.log(getProcessById(el.getAttribute('data-process_id')));
 
             clearBoard();
-            clearDiscover();
+            // clearDiscover();
 
-            populateWithProcesses();
+            // populateWithProcesses();
             populateCompositionListWithProcess(getProcessById(el.getAttribute('data-process_id')), services);
             populateProcessListWithProcess(getProcessById(el.getAttribute('data-process_id')), services);
             decorateList();
@@ -507,6 +507,8 @@
       var autorP;
       var versaoP;
       var nomeXpdl;
+
+      var totalWSDL;
 
       $('#xmlForm').submit(function(event) {
         //event.preventDefault();
@@ -641,19 +643,33 @@
     wsdlLabelN.innerHTML = "Selecione um arquivo: ";
     nomeLabelN.innerHTML = "Digite um nome: ";
 
-    if(this.files[0] != null) serviços[parseInt(this.id)].nome.required = true;
+    console.log(this.id);
+    console.log(this.id + 1);
+    console.log(parseInt(this.id) - 1);
+    console.log(this.files[parseInt(this.id) - 1]);
+    console.log(this.files.length);
+    console.log(serviços.length);
+
+    if(this.files[parseInt(this.id)] != null){
+      serviços[parseInt(this.id)].nome.required = true;
+      serviços[parseInt(this.id)].nome.placeholder = this.files[parseInt(this.id)].name;
+    }
 		else serviços[parseInt(this.id)].nome.required = false;
 		
 		console.log(this.files[0]);
 		console.log(serviços[parseInt(this.id)].nome.required);
 
+
+
         fileN.type = "file";
         fileN.name = this.name;
-        fileN.id = this.id+1;
+        fileN.id = parseInt(serviços.length);
+
+        nomeN.id = parseInt(serviços.length);
 
         ulParent = document.getElementById(this.name);
 
-        nomeN.placeholder = "Interface " + (ulParent.length/4 + 1);
+        nomeN.placeholder = "Interface de Processo " + (nomeN.id);
 
         serviços.push({
           wsdl:fileN,
@@ -675,6 +691,7 @@
 		ulParent.appendChild(serviços[(serviços.length - 1)].nome);
         
       fileN.onchange = addElementE;
+      nomeN.onchange = fazerRequired;
 
     }
 
@@ -744,6 +761,7 @@
           '<button type="submit" class="btn" onclick="aceitarWSDLs()">Seguinte</button>'+
           '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
           
+            totalWSDL = atividadesPublicas.length;
 
         for (var i = 0; i < atividadesPublicas.length; i++) {
           console.log(atividadesPublicas[i].value + " " + atividadesPublicas[i].checked);
@@ -791,8 +809,8 @@
               atividade: atividades[i].name
             })
 
-            serviços[(serviços.length - 1)].wsdl.id = (serviços.length - 1);
-            serviços[(serviços.length - 1)].nome.id = (serviços.length - 1);
+            serviços[(serviços.length - 1)].wsdl.id = parseInt((serviços.length - 1));
+            serviços[(serviços.length - 1)].nome.id = parseInt((serviços.length - 1));
 
             // var item = document.createElement('li');
             // item.appendChild(serviços[(serviços.length - 1)].wsdl);

@@ -4,21 +4,25 @@ function populateCompositionListWithProcess(process, services){
   // });
   // $.get('/services', function(data, status){
     // services = data;
+    var index = 0;
+
     for (let i = 0; i < process.steps.length; i++) {
         if(process.steps[i].boa == true){
           KanbanTest.addElement("_compose", {
-            id: "id",
+            id: 'compose-item-'+ index,
             title: process.steps[i].name,
           });
+          index++;
           for (let j = 0; j < services.length; j++) {
             if( (process.steps[i].name == services[j].atividade) && (process.header.name == services[j].processo) ){
               KanbanTest.addElement("_compose", {
-                id: 'id',
+                id: ('compose-item-'+ index),
                 title: services[j].nome,
                 type1 : "",
                 wsdl:  services[j].wsdl,
                 processo: services[j].processo
               });
+              index++;
             }
             //console.log(process.steps[i].name);
             //console.log(services[j].description)
@@ -28,11 +32,11 @@ function populateCompositionListWithProcess(process, services){
           }
         }
     }
-    KanbanTest.addElement("_compose", {
-      id: "id",
-      title: "null",
-      type1 : ""
-    });
+    // KanbanTest.addElement("_compose", {
+    //   id: "id",
+    //   title: "null",
+    //   type1 : ""
+    // });
   // }
 }
 
@@ -42,7 +46,7 @@ function populateProcessListWithProcess(process, services){
   // });
   for (let i = 0; i < process.steps.length; i++) {
     KanbanTest.addElement("_full_process", {
-      id: "id",
+      id: ('process-item-'+i),
       title: process.steps[i].name,
     });
     // for (let j = 0; j < services.length; j++) {
@@ -60,11 +64,11 @@ function populateProcessListWithProcess(process, services){
       
     // }
   }
-  KanbanTest.addElement("_full_process", {
-    id: "id",
-    title: "null",
-    type2 : ""
-  });
+  // KanbanTest.addElement("_full_process", {
+  //   id: "id",
+  //   title: "null",
+  //   type2 : ""
+  // });
 }
 
 function decorateList(){
@@ -73,14 +77,14 @@ function decorateList(){
       a[i].classList.add("warning");
       a[i].classList.add("width80");
     }
-    a[a.length - 1].classList.add("hidden");
+    //a[a.length - 1].classList.add("hidden");
 
     a = document.querySelectorAll('[data-type2]');
     for (let i = 0; i < a.length; i++) {
       a[i].classList.add("warning");
       a[i].classList.add("width80");
     }
-    a[a.length - 1].classList.add("hidden");
+    //a[a.length - 1].classList.add("hidden");
 }
 
 function getProcessById(id){
@@ -93,14 +97,21 @@ function clearBoard(){
   console.log("aaaaaa")
   console.log(KanbanTest.getBoardElements("_compose"));
 
-  while( KanbanTest.getBoardElements("_compose").length > 0) KanbanTest.removeElement("id");
-  while( KanbanTest.getBoardElements("_full_process").length > 0) KanbanTest.removeElement("id");
+  var composeLength = KanbanTest.getBoardElements("_compose").length;
+  var processLength = KanbanTest.getBoardElements("_full_process").length;
 
-  for (let i = 0; i < KanbanTest.getBoardElements("_compose").length + 8; i++) {
-    KanbanTest.removeElement("id")
+  // while( KanbanTest.getBoardElements("_compose").length > 0) KanbanTest.removeElement("id");
+  // while( KanbanTest.getBoardElements("_full_process").length > 0) KanbanTest.removeElement("id");
+
+  for (let i = 0; i < composeLength; i++) {
+    console.log(KanbanTest.findElement('compose-item-'+i));
+    KanbanTest.removeElement('compose-item-'+i);
+    console.log('compose-item-'+i)
   }
-  for (let i = 0; i < KanbanTest.getBoardElements("_full_process").length + 6; i++) {
-    KanbanTest.removeElement("id")
+  for (let i = 0; i < processLength; i++) {
+    console.log(KanbanTest.findElement('process-item-'+i));
+    KanbanTest.removeElement('process-item-'+i);
+    console.log('process-item-'+i)
   }
   
   // KanbanTest.removeBoard("_compose");

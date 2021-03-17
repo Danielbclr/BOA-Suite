@@ -118,6 +118,7 @@ var readXml=null;
 				author: dom.window.document.querySelector("autor").textContent,
 				date: dom.window.document.querySelector("data").textContent,
 				version: dom.window.document.querySelector("versão").textContent,
+				xpdl: dom.window.document.querySelector("Xpdl").textContent,
 				bpdl: filename,
 			},
 			steps:[]

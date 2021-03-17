@@ -5,6 +5,7 @@
         <Versão>1.1</Versão>
         <Data>18/1/2021 @ 16:13:30</Data>
         <Descrição>Processo de Compras com wsdls atualizado</Descrição>
+	<Xpdl/>
     </ProcessoInfo>
     <Atividades>
         <Atividade nome="Aceitar envio" id="32aeb6e9-61b9-4f85-a126-a12c4a2666ba" público="false"/>
