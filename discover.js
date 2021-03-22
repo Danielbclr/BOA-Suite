@@ -5,6 +5,8 @@ function populateWithProcesses(){
         process = data[0];
         services = data[1];
 
+        console.log(status);
+
         for (let i = 0; i < process.length; i++) {
             console.log(process[i].header.name)
 

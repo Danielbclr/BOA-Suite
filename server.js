@@ -15,6 +15,41 @@ const { JSDOM } = jsdom;
 
 app.use(express.static(path.join(__dirname, './')));
 
+app.get('/processos', function(req, res) {
+	
+        console.log('alface');
+        enviarDados = [processos, services];
+
+	console.log(enviarDados);
+        console.log('batata');
+
+	res.send(enviarDados);
+});
+
+app.get('/download/:name', function(req, res){
+	var fileName = req.params.name.split(':').pop();
+	var extensao;
+
+	if( fileName.split('.').pop() == "bpdl" ) extensao = "bpdl";
+	else if(fileName.split('.').pop() == "xpdl") extensao = "xpdl";
+	else extensao = "wsdl"
+
+	var caminho = path.join(__dirname, '/repo/', extensao, fileName);
+
+	console.log(caminho);
+
+	res.download(caminho, fileName, (err) => {
+	  if (err) {
+	    console.log(err);
+	    res.status(500).send({
+	      message: "Could not download the file. " + err,
+	    });
+	  }
+	});
+			
+})
+
+
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, '/'));
 });
@@ -192,36 +227,6 @@ async function printProcessos(){
 parseFolder();
 
 
-app.get('/processos', function(req, res) {
-	enviarDados = [processos, services];
-
-	console.log(enviarDados);
-
-	res.send(enviarDados);
-});
-
-app.get('/download/:name', function(req, res){
-	var fileName = req.params.name.split(':').pop();
-	var extensao;
-
-	if( fileName.split('.').pop() == "bpdl" ) extensao = "bpdl";
-	else if(fileName.split('.').pop() == "xpdl") extensao = "xpdl";
-	else extensao = "wsdl"
-
-	var caminho = path.join(__dirname, '/repo/', extensao, fileName);
-
-	console.log(caminho);
-
-	res.download(caminho, fileName, (err) => {
-	  if (err) {
-	    console.log(err);
-	    res.status(500).send({
-	      message: "Could not download the file. " + err,
-	    });
-	  }
-	});
-			
-})
 
 let port = 8080;
 app.listen(port, () => {
