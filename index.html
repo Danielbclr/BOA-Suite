@@ -182,13 +182,7 @@
 
 	<script>
     
-    // var formDataFile = new FormData();
-    // formDataFile.append('file', document.getElementById('input').files[0]);
-    // var form = new FormData(document.getElementById('input').files[0]);
-    //var fileUp = document.getElementById('input').files[0];
-
-    //TENTATIVA USANDO AJAX
-    //*
+ 
     function sendAjax( dataS){
       var formData = new FormData();
       formData.append('file', dataS);
@@ -204,9 +198,9 @@
           }
       });
     }
-    //*/
 
-    //*
+
+
     //TENTATIVA USANDO POST
     function sendPost( dataS){
       var form = req.form();
@@ -223,8 +217,7 @@
     });
     
     }
-       //*/
-  //*
+
   //TENTATIVA USANDO FETCH
     function sendFetch( dataS){
       var formData = new FormData();
@@ -241,116 +234,7 @@
       .catch(error => {
         console.error(error)
       })
-    }//*/
-/*
-       var readXml=null;
-       $('#xmlForm').submit(function(event) {
-        event.preventDefault();
-
-        // $.get('/ajax', function(data, status){
-        //   console.log(data);
-        // })
-
-        console.log("Imprimindo atividade");
-        
-        var selectedFile = document.getElementById('input').files[0];     
-
-        console.log(selectedFile);
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            // console.log(e);
-            // console.log(typeof e);
-
-            // console.log(e.target);
-            // console.log(typeof e.target);
-
-            // console.log(e.target.result);
-            // console.log(typeof e.target.result);
-
-            readXml=e.target.result;
-            console.log(readXml);
-
-            sendAjax(selectedFile);
-
-            var fileName = selectedFile.name.slice(0, -5);
-            console.log(fileName)
-
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(readXml, "application/xml");
-            console.log(doc);
-            console.log(typeof readXml);
-            console.log(typeof doc);
-
-            var nodes = doc.getElementsByTagName("Activity");
-            console.log(nodes[0]);
-            console.log(nodes[0].getAttribute("Id"));
-
-      console.log(process.length + 1)
-            var novoModelo=
-            {
-          header: {
-              process_id: String(process.length + 1),
-              name: fileName,
-              description: "Diagrama 1",
-              author: "Luciane Meconi",
-          },
-          steps:[]
-      }
-
-      var step = {
-              id: "",
-              name: "",
-              boa: false
-          };
-
-          for( let i = 0; i < nodes.length; i++){
-            var n = nodes[i];
-
-            if(n.getAttribute("Name") != ""){
-              step.id = n.getAttribute("Id");
-              step.name = n.getAttribute("Name");
-
-              console.log(i);
-              console.log(step.id);
-              console.log(step.name);
-
-              novoModelo.steps.push({
-                  id: n.getAttribute("Id"),
-                  name: n.getAttribute("Name"),
-                  boa: false
-              }
-              );
-
-              console.log(novoModelo.steps[i]);
-              console.log(novoModelo);
-              console.log("================");
-            }
-
-          }
-
-          console.log("Finalizou parse");
-
-          console.log(novoModelo);
-          console.log(process[0]);
-
-          process.push(novoModelo);
-
-          console.log(novoModelo);
-
-            alert("Publicando processos");
-
-
-          clearBoard();
-          clearDiscover();
-
-          populateWithProcesses();
-
-
-        }
-        reader.readAsText(selectedFile);
-
-       });
-*/
+    }
        
 
     </script>
@@ -432,7 +316,7 @@
           dragTo: ["_working"],
           item: [
             {
-              title: "<button style=\"text-align:center; margin: 0 auto;\" class=\"btn btn-primary btn-fab btn-round\"><i class=\"material-icons\">add</i> </button>Clique para adcionar um arquivo .xpdl",
+              title: "<button style=\"text-align:center; right: 5px; margin: 0 auto;\" class=\"btn btn-primary btn-fab btn-round\"><i class=\"material-icons\">add</i> </button>Clique para adcionar um arquivo .xpdl",
               click: function(el) {
                 getFile();
               // 	process.push(adcEl);
@@ -535,8 +419,9 @@
         //document.getElementById('popupForm_p1').innerHTML = 'Selecione as atividades que quer publicar';
         document.getElementById('popupForm').innerHTML=
         '<h1>Publicação</h1>'+
+        '<h2>Passo 1: Informações do Processo</h2>'+
         '<p>Insira as informações sobre o processo</p>'+
-        '<label for="title"><b>Insira o nome do processo</b></label>' +
+        '<label for="title"><b>Insira o nome do processo (esse dado será utilizado na descoberta)</b></label>' +
         '<input type="text" placeholder="Título" id="title" required>'+
         '<label for="author"><b>Insira o nome do autor</b></label>' +
         '<input type="text" placeholder="Autor" id="author" required>'+
@@ -669,7 +554,7 @@
 
         ulParent = document.getElementById(this.name);
 
-        nomeN.placeholder = "Interface de Processo " + (nomeN.id);
+        nomeN.placeholder = "Nenhum arquivo selecionado";
 
         serviços.push({
           wsdl:fileN,
@@ -751,7 +636,8 @@
         var atividadesElem = bpdl.createElement("Atividades");
 
         document.getElementById('popupForm').innerHTML=
-          '<h1>Publicação</h1>'+
+          '<h1>Composição</h1>'+
+          '<h2>Passo 4: Interfaces de Processo</h2>'+
           '<p>Selecione as interfaces de processo (WSDL) que serão enviadass</p>'+
           '<p>Para cada item insira um arquivo WSDL e o nome do serviço representado</p>' +
           '<p>Para cada arquivo selecionado uma nova linha referente a um novo serviço associado a mesma atividade aparecerá </p>' +
@@ -915,6 +801,7 @@
 
         document.getElementById('popupForm').innerHTML=
           '<h1>Publicação</h1>'+
+          '<h2>Passo 3: Atividades Públicas</h2>'+
           '<p>Selecione quais atividades são publicas</p>' +
           '<button type="button" id="selectAll" class="main"> <span class="sub"></span>Selecionar Todos</button>' +
           '<ul id="ul">'+
@@ -1011,6 +898,7 @@
 
           document.getElementById('popupForm').innerHTML=
           '<h1>Publicação</h1>'+
+          '<h2>Passo 2: Atividades do Processo</h2>'+
           '<p>Selecione as atividades que quer publicar</p>' +
           '<button type="button" id="selectAll" class="main"> <span class="sub"></span>Selecionar Todos</button>' +
           '<ul id="ul">'+

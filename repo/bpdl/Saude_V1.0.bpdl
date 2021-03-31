@@ -1,0 +1,29 @@
+<Processo>
+    <ProcessoInfo>
+        <Nome>Saude</Nome>
+        <Autor>LM</Autor>
+        <Versão>1.0</Versão>
+        <Data>22/3/2021 @ 17:21:47</Data>
+        <Descrição>Saude</Descrição>
+        <Xpdl>Modelo Saúde.xpdl</Xpdl>
+    </ProcessoInfo>
+    <Atividades>
+        <Atividade nome="Procurar atendimento médico" id="003f940c-8d26-4edc-aa4b-e82633a8b4d5" público="false"/>
+        <Atividade nome="Risco Baixo" id="579844cf-9423-4c0a-8459-e804c68cda80" público="false"/>
+        <Atividade nome="Risco Médio" id="ca16d2c9-0eca-453d-a2ce-7473385b0400" público="false"/>
+        <Atividade nome="Risco Alto" id="fbd8bb62-5035-4372-8f50-091d481ba6a7" público="false"/>
+        <Atividade nome="Processar resultado" id="e0a6570c-0e83-4ebe-b791-8214fff36720" público="false"/>
+        <Atividade nome="Realizar consulta" id="8b95a023-a7a4-4ddd-a028-68966b3901b9" público="true">
+            <Wsdl nome="Hospital Aliança">Saude_Interface.wsdl.rtf</Wsdl>
+            <Wsdl nome="Hospital da Bahia">Saude_Interface.wsdl.rtf</Wsdl>
+            <Wsdl nome="Hospital Roberto Santos">Saude_Interface.wsdl.rtf</Wsdl>
+        </Atividade>
+        <Atividade nome="Nível Hospitalar" id="b5141941-7e3e-45e0-be38-28f1d9db70f4" público="false"/>
+        <Atividade nome="Nível Ambulatório" id="5554b605-dde1-4d84-8ef7-f142550b4209" público="false"/>
+        <Atividade nome="Buscar Laboratório" id="37f44bd3-1c89-411f-87d0-93e886103262" público="true">
+            <Wsdl nome="Sabin">Saude_Interface.wsdl.rtf</Wsdl>
+            <Wsdl nome="A+">Saude_Interface.wsdl.rtf</Wsdl>
+        </Atividade>
+        <Atividade nome="Analisar resultado" id="dafc0e9b-63be-427e-bf09-bcf3211ecc74" público="false"/>
+    </Atividades>
+</Processo>

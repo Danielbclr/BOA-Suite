@@ -17,20 +17,28 @@
   width: auto;
 }
 
+.kanban-title-board{
+  color: #ffffff;
+}
+
 .descoberta {
-  background: #dde02cd2;
+  background: #353538;
+}
+
+.descobertas {
+  background: #353538;
 }
 
 .publicação {
-  background: #f0720cb2;
+  background: #353538;
 }
 
 .atividades {
-  background: #4ad61fa8;
+  background: #353538;
 }
 
 .composição {
-  background: #1ad8cea8;
+  background: #353538;
 }
 
 
@@ -66,7 +74,7 @@
   padding: 10px;
   cursor: move;
   z-index: 10;
-  background-color: #f0720cb2;
+  background-color: #353538;
   color: #fff;
 }
 
@@ -155,6 +163,10 @@ textarea {
 /* Add some hover effects to buttons */
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
+}
+
+.btn .btn-primary .btn-fab btn-round{
+  margin-left: 10px;
 }
 
 table {

@@ -131,7 +131,7 @@ function clearDiscover(){
     var discoverLength = KanbanTest.getBoardElements("_discover").length;
 
 	for (let i = 0; i < discoverLength; i++) {
-    	KanbanTest.removeElement("discover-item"+i)
+    	KanbanTest.removeElement("discover-item-"+i)
   	}
 
     //   while( KanbanTest.getBoardElements("_discover").length > 0) KanbanTest.removeElement("id");
