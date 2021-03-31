@@ -64,7 +64,7 @@
   top: 80px;
   border: 3px solid #f1f1f1;
   z-index: 9;
-  text-align:justify;
+  text-align: left;
   resize:none;
   max-height: calc(100vh - 210px);
   max-height: calc(100vh - 210px);  

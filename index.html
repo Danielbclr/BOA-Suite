@@ -377,6 +377,7 @@
 
       var ativ;
       var bpdl;
+      var xpdl;
       var processElem;
       var atividades = [];
 
@@ -413,6 +414,8 @@
 
       function aceitarXpdl() {
         document.getElementById('arquivoOK').click();
+
+        xpdl = document.getElementById('input').files[0];
         //document.getElementById('xmlForm').submit;
 
         //document.getElementById("myForm").style.display = "none";
@@ -768,7 +771,7 @@
         });
 
         var formData = new FormData();
-        formData.append('file', document.getElementById('input').files[0]);
+        formData.append('file', xpdl);
 
         $.ajax({
             url: '/',
@@ -784,9 +787,10 @@
         document.getElementById('popupForm').innerHTML=
           '<h1>Publicação Finalizada!</h1>'+
           '<p>Pronto, seu processo foi publicado com sucesso!</p>' +
-          '<p>Para o acessar utilize a coluna DESCOBERTA para buscar pelo título e selecionar na lista. </p>' +
-          '<p>Você pode clicar duas vezes nele para acessar as Informações do Processo além de ter a opção para baixar o XPDL que publicou e o BPDL gerado.</p>' +
-          '<button type="submit" class="btn" onclick="refresh()">Finalizar</button>';
+          '<p>Para acessá-lo, utilize a coluna DESCOBERTA, busque pelo título do processo (nome utilizado no momento da publicação) e o selecione na lista. </p>' +
+          '<p>Para acessar as informações do processo, clicar duas vezes no nome do processo. Assim, você pode também baixar o XPDL e o BPDL gerado.</p>' +
+          '<b>Caso a página não atualize ou fique carregando indefinidamente, por favor, feche seu browser e o abra novamente.</b>' +
+          '<button type="button" class="btn" onclick="refresh()">Finalizar</button>';
 
         }
 

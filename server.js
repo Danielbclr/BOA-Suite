@@ -8,6 +8,27 @@ var app = express();
 var multer  = require('multer');
 const { MulterError } = require('multer');
 
+// MANAGE AN UPLOADED FILE
+//CONFIGURAÇÃO MULTER
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		if( file.originalname.split('.').pop() == "bpdl"){
+			cb(null, './repo/bpdl/');
+		}
+		else if(file.originalname.split('.').pop() == "xpdl" ){
+			cb(null, './repo/xpdl/');
+		}
+		else if(file.originalname.split('.').pop() == "wsdl" ){
+			cb(null, './repo/wsdl/');
+		}
+	},
+	filename: function (req, file, cb) {
+		cb(null, file.originalname);
+	}
+});
+
+var upload = multer({ storage: storage });
+
 var cors = require('cors')
 
 const jsdom = require("jsdom");
@@ -49,43 +70,6 @@ app.get('/download/:name', function(req, res){
 			
 })
 
-
-app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, '/'));
-});
-
-app.get('/', function(req, res) {
-    res.redirect('index.html');
-});
-
-// MANAGE AN UPLOADED FILE
-//CONFIGURAÇÃO MULTER
-var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		if( file.originalname.split('.').pop() == "bpdl"){
-			cb(null, './repo/bpdl/');
-		}
-		else if(file.originalname.split('.').pop() == "xpdl" ){
-			cb(null, './repo/xpdl/');
-		}
-		else if(file.originalname.split('.').pop() == "wsdl" ){
-			cb(null, './repo/wsdl/');
-		}
-	},
-	filename: function (req, file, cb) {
-		cb(null, file.originalname);
-	}
-});
-
-var upload = multer({ storage: storage });
-
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(function( err, req, res, next){
-	if( err instanceof multer,MulterError) res.status(500).send(err.message);
-	else next(err);
-})
-
 app.post('/', upload.single('file'), function(req, res){
 	console.log("Salvando arquivo");
 	console.log(req.file);
@@ -98,6 +82,21 @@ app.post('/', upload.single('file'), function(req, res){
 	if(req.file.filename.split('.').pop() == "bpdl") parseFolder();
 });
 
+
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '/'));
+});
+
+app.get('/', function(req, res) {
+    res.redirect('index.html');
+});
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function( err, req, res, next){
+	if( err instanceof multer,MulterError) res.status(500).send(err.message);
+	else next(err);
+})
 
 //GERENCIAR ARQUIVOS NO REPOSITORIO
 //LER TODOS OS ARQUIVOS QUANDO INICIA O SERVIDOR
@@ -215,7 +214,7 @@ var readXml=null;
 }
 
 
-async function printProcessos(){
+function printProcessos(){
 	console.log("tamanho: " + processos.length);
 
 	for(let i=0; i<processos.length;i++){
