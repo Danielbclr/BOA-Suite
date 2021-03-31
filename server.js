@@ -38,11 +38,11 @@ app.use(express.static(path.join(__dirname, './')));
 
 app.get('/processos', function(req, res) {
 	
-        console.log('alface');
+        //console.log('alface');
         enviarDados = [processos, services];
 
 	console.log(enviarDados);
-        console.log('batata');
+       // console.log('batata');
 
 	res.send(enviarDados);
 });
@@ -57,7 +57,7 @@ app.get('/download/:name', function(req, res){
 
 	var caminho = path.join(__dirname, '/repo/', extensao, fileName);
 
-	console.log(caminho);
+	//console.log(caminho);
 
 	res.download(caminho, fileName, (err) => {
 	  if (err) {
@@ -72,10 +72,10 @@ app.get('/download/:name', function(req, res){
 
 app.post('/', upload.single('file'), function(req, res){
 	console.log("Salvando arquivo");
-	console.log(req.file);
-	console.log(typeof req.file);
+	//console.log(req.file);
+	//console.log(typeof req.file);
 	console.log(req.body);
-	console.log(typeof req.body);
+	//console.log(typeof req.body);
 
 	processos = [];
 
