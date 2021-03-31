@@ -22,23 +22,23 @@
 }
 
 .descoberta {
-  background: #353538;
+  background: #678185;
 }
 
 .descobertas {
-  background: #353538;
+  background: #678185;
 }
 
 .publicação {
-  background: #353538;
+  background: #678185;
 }
 
 .atividades {
-  background: #353538;
+  background: #678185;
 }
 
 .composição {
-  background: #353538;
+  background: #678185;
 }
 
 
@@ -70,11 +70,11 @@
   max-height: calc(100vh - 210px);  
 }
 
-#myFormHeader {
+.draggable-header {
   padding: 10px;
   cursor: move;
   z-index: 10;
-  background-color: #353538;
+  background-color: #678185;
   color: #fff;
 }
 
@@ -145,7 +145,7 @@ textarea {
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color: #4CAF50;
+  background-color: rgb(6, 178, 9);
   color: white;
   padding: 16px 20px;
   border: none;
@@ -157,7 +157,7 @@ textarea {
 
 /* Add a red background color to the cancel button */
 .form-container .cancel {
-  background-color: red;
+  background-color: rgb(178, 6, 6);
 }
 
 /* Add some hover effects to buttons */

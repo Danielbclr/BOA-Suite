@@ -104,7 +104,7 @@
   <button class="open-button" onclick="openForm()">Open Form</button>
 
   <div class="form-popup" id="myForm">
-    <div id="myFormHeader">Publicação</div>
+    <div class="draggable-header" id="myFormHeader">BOA Suite</div>
     <form id='popupForm' class="form-container" onsubmit="return false">
       <h1>Publicação</h1>
 
@@ -117,6 +117,7 @@
   </div>
 
   <div class="form-popup" id="div-header" >
+    <div class="draggable-header" id="div-headerHeader">Informações do Processo</div>
     <form id='form-header' class="form-container">
       
     </form>
@@ -125,6 +126,7 @@
   <script>
     //Make the DIV element draggagle:
     dragElement(document.getElementById("myForm"));
+    dragElement(document.getElementById("div-header"));
     
     function dragElement(elmnt) {
       var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -638,10 +640,10 @@
         document.getElementById('popupForm').innerHTML=
           '<h1>Composição</h1>'+
           '<h2>Passo 4: Interfaces de Processo</h2>'+
-          '<p>Selecione as interfaces de processo (WSDL) que serão enviadass</p>'+
-          '<p>Para cada item insira um arquivo WSDL e o nome do serviço representado</p>' +
-          '<p>Para cada arquivo selecionado uma nova linha referente a um novo serviço associado a mesma atividade aparecerá </p>' +
-          '<p>Caso não utilizar alguma linha deixe ambos campos de arquivo e nome referentes a esta linha vazios </p>' +
+          '<p>Selecione as interfaces de processo (WSDL) que serão enviadas</p>'+
+          '<p>Para cada item insira um arquivo WSDL e o nome da interface de processo representada.</p>' +
+          '<p>Para cada arquivo selecionado uma nova linha referente a uma nova interface de processo associada a mesma atividade aparecerá </p>' +
+          '<p>Caso não utilizar alguma linha deixe ambos campos de arquivo e nome referentes a esta linha vazios. </p>' +
           '<div id="lista-serviços">' +
           '</div>' +
           '<button type="submit" class="btn" onclick="aceitarWSDLs()">Seguinte</button>'+
@@ -672,7 +674,7 @@
             var wsdl = document.createElement("input");
             var nome = document.createElement("input");
             
-            nome.placeholder = "Interface 1";
+            nome.placeholder = "Nenhum arquivo selecionado";
 
             var wsdlLabel = document.createElement("Label");
             var nomeLabel = document.createElement("Label");
@@ -780,7 +782,10 @@
         });
 
         document.getElementById('popupForm').innerHTML=
-          '<h1>Publicação Finalizada</h1>'+
+          '<h1>Publicação Finalizada!</h1>'+
+          '<p>Pronto, seu processo foi publicado com sucesso!</p>' +
+          '<p>Para o acessar utilize a coluna DESCOBERTA para buscar pelo título e selecionar na lista. </p>' +
+          '<p>Você pode clicar duas vezes nele para acessar as Informações do Processo além de ter a opção para baixar o XPDL que publicou e o BPDL gerado.</p>' +
           '<button type="submit" class="btn" onclick="refresh()">Finalizar</button>';
 
         }
@@ -794,6 +799,9 @@
         clearDiscover();
 
         populateWithProcesses();
+
+        location.reload();
+        return false;
       }
 
       function aceitarAtividades() {
@@ -802,7 +810,7 @@
         document.getElementById('popupForm').innerHTML=
           '<h1>Publicação</h1>'+
           '<h2>Passo 3: Atividades Públicas</h2>'+
-          '<p>Selecione quais atividades são publicas</p>' +
+          '<p>Selecione quais atividades são publicas.</p>' +
           '<button type="button" id="selectAll" class="main"> <span class="sub"></span>Selecionar Todos</button>' +
           '<ul id="ul">'+
           '</ul>'+
