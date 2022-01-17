@@ -25,6 +25,7 @@
     <script src="./boards.js"></script>
     <script src="./discover.js"></script>
     <script src="./server.js"></script>
+    <script src="./strings.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"> </script>
     <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/vkbeautify/vkbeautify.0.99.00.beta.js"></script>
@@ -73,6 +74,9 @@
               <span class="navbar-toggler-icon"></span>
               <span class="navbar-toggler-icon"></span>
             </button>
+
+          </div>
+            <button id="language-toggle" style="position: absolute; right: 0; width: fit-content; margin-right: 100pt; background-color: #51686c; color: #FFFFFF;" onclick="select_language()">PT</button>
           </div>
         </div>
       </nav>
@@ -244,7 +248,57 @@
     <script src="vendor/jkanban/jkanban.min.js"></script>
     
     <script>
+
+      var language_toggle_div = document.getElementById("language-toggle");
       
+      var langSelector = getCookie("lang");
+      console.log(langSelector)
+
+      if(langSelector == "") langSelector = 0;
+      
+      if(langSelector == 1) language_toggle_div.innerHTML = "EN";
+
+      function select_language(){
+        console.log("Mudando Lingua");
+      
+        if( langSelector == 0){
+          langSelector = 1;
+          language_toggle_div.innerHTML = "EN"
+        }
+        else{
+          langSelector = 0;
+          language_toggle_div.innerHTML = "PT"
+        }
+        
+        setCookie("lang", langSelector, 90);
+
+        location.reload()
+      }
+
+      function setCookie(cname,cvalue,exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "," + expires + ",";
+        console.log(document.cookie)
+      }
+
+      function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(',');
+        for(let i = 0; i < ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
       console.log(boards)
       var boards2 = boards;
       var KanbanTest = new jKanban({
@@ -295,7 +349,7 @@
           var formItem = document.createElement("form");
           formItem.setAttribute("class", "itemform");
           formItem.innerHTML =
-            '<div class="form-group"><textarea class="form-control" rows="2" autofocus></textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">Submit</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">Cancel</button></div>';
+            '<div class="form-group"><textarea class="form-control" rows="2" autofocus></textarea></div><div class="form-group"><button type="submit" class="btn btn-primary btn-xs pull-right">' + strings[langSelector].submit + '</button><button type="button" id="CancelBtn" class="btn btn-default btn-xs pull-right">' + strings[langSelector].cancel + '</button></div>';
           KanbanTest.addForm(boardId, formItem);
           formItem.addEventListener("submit", function(e) {
             e.preventDefault();
@@ -313,12 +367,12 @@
         boards: [
         {
           id: "_publish",
-          title: "Publicação",
+          title: strings[langSelector].pub,
           class: "publicação",
           dragTo: ["_working"],
           item: [
             {
-              title: "<button style=\"text-align:center; right: 5px; margin: 0 auto;\" class=\"btn btn-primary btn-fab btn-round\"><i class=\"material-icons\">add</i> </button>Clique para adcionar um arquivo .xpdl",
+              title: "<button style=\"text-align:center; right: 5px; margin: 0 auto;\" class=\"btn btn-primary btn-fab btn-round\"><i class=\"material-icons\">add</i> </button>" + strings[langSelector].click_add,
               click: function(el) {
                 getFile();
               // 	process.push(adcEl);
@@ -344,19 +398,19 @@
         },
         {
           id: "_discover",
-          title: "Descoberta <form style=\"text-align:center; margin: 10px;\" class=\"form ml-auto\"> <div class=\"form-group\"> <input id=\"searchForm\" type=\"text\" class=\"form-control\" onkeyup=\"search()\" placeholder=\"Procurar processo...\"> </div><button type=\"submit\" class=\"btn btn-white btn-raised btn-fab btn-round\"> <i class=\"material-icons\">search</i> </button> </form>",
+          title: strings[langSelector].dsc + "<form style=\"text-align:center; margin: 10px;\" class=\"form ml-auto\"> <div class=\"form-group\"> <input id=\"searchForm\" type=\"text\" class=\"form-control\" onkeyup=\"search()\" placeholder=\"Procurar processo...\"> </div><button type=\"submit\" class=\"btn btn-white btn-raised btn-fab btn-round\"> <i class=\"material-icons\">search</i> </button> </form>",
           class: "descoberta",
         },
         {
           id: "_full_process",
-          title: "Atividades do Processo",
+          title: strings[langSelector].atv,
           class: "atividades",
           dragTo: ["_working"],
           item: []
         },
         {
           id: "_compose",
-          title: "Composição de Processos Publicos",
+          title: strings[langSelector].cmp,
           class: "composição",
           dragTo: ["_working"],
           item: []
@@ -422,20 +476,20 @@
         //document.getElementById("myForm2").style.display = "block";
 
         //document.getElementById('popupForm_p1').innerHTML = 'Selecione as atividades que quer publicar';
-        document.getElementById('popupForm').innerHTML=
-        '<h1>Publicação</h1>'+
-        '<h2>Passo 1: Informações do Processo</h2>'+
-        '<p>Insira as informações sobre o processo</p>'+
-        '<label for="title"><b>Insira o nome do processo (esse dado será utilizado na descoberta)</b></label>' +
-        '<input type="text" placeholder="Título" id="title" required>'+
-        '<label for="author"><b>Insira o nome do autor</b></label>' +
-        '<input type="text" placeholder="Autor" id="author" required>'+
-        '<label for="version"><b>Insira a versão</b></label>' +
-        '<input type="text" placeholder="Versão" id="version" required>'+
-        '<label for="description"><b>Insira uma descrição</b></label>' +
-        '<textarea id = "description"  placeholder="Insira uma descrição"></textarea>'+
-        '<button type="submit" class="btn" onclick="aceitarHeader()">Seguinte</button>'+
-        '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+        document.getElementById('popupForm').innerHTML =
+        '<h1>' + strings[langSelector].pub + '</h1>'+
+        '<h2>' + strings[langSelector].passo1_titulo + '</h2>'+
+        '<p>' + strings[langSelector].passo1_desc + '</p>'+
+        '<label for="title"><b>' + strings[langSelector].passo1_insiraTitulo + '</b></label>' +
+        '<input type="text" placeholder="' + strings[langSelector].titulo + '" id="title" required>'+
+        '<label for="author"><b>' + strings[langSelector].passo1_insiraAutor + '</b></label>' +
+        '<input type="text" placeholder="' + strings[langSelector].autor + '" id="author" required>'+
+        '<label for="version"><b>' + strings[langSelector].passo1_insiraVersao + '</b></label>' +
+        '<input type="text" placeholder="' + strings[langSelector].versao + '" id="version" required>'+
+        '<label for="description"><b>' + strings[langSelector].passo1_insiraDesc + '</b></label>' +
+        '<textarea id = "description"  placeholder="' + strings[langSelector].passo1_insiraDesc + '"></textarea>'+
+        '<button type="submit" class="btn" onclick="aceitarHeader()">' + strings[langSelector].nxt + '</button>'+
+        '<button type="button" class="btn cancel" onclick="closeForm()">' + strings[langSelector].cancel + '</button>';
       }
 
       function parseFile(selectedFile) {
@@ -559,7 +613,7 @@
 
         ulParent = document.getElementById(this.name);
 
-        nomeN.placeholder = "Nenhum arquivo selecionado";
+        nomeN.placeholder = strings[langSelector].no_file;
 
         serviços.push({
           wsdl:fileN,
@@ -629,8 +683,8 @@
         }
 
         document.getElementById('popupForm').innerHTML=
-          '<h1>Publicação</h1>'+
-          '<p>Aguarde enquanto a Publicação finaliza</p>';
+          '<h1>' + strings[langSelector].pub + '</h1>'+
+          '<p>' + strings[langSelector].wait_fin + '</p>';
 
         finalizarPublicação();
       }
@@ -641,16 +695,16 @@
         var atividadesElem = bpdl.createElement("Atividades");
 
         document.getElementById('popupForm').innerHTML=
-          '<h1>Composição</h1>'+
-          '<h2>Passo 4: Interfaces de Processo</h2>'+
-          '<p>Selecione as interfaces de processo (WSDL) que serão enviadas</p>'+
-          '<p>Para cada item insira um arquivo WSDL e o nome da interface de processo representada.</p>' +
-          '<p>Para cada arquivo selecionado uma nova linha referente a uma nova interface de processo associada a mesma atividade aparecerá </p>' +
-          '<p>Caso não utilizar alguma linha deixe ambos campos de arquivo e nome referentes a esta linha vazios. </p>' +
+          '<h1>' + strings[langSelector].dsc + '</h1>'+
+          '<h2>' + strings[langSelector].passo4 + '</h2>'+
+          '<p>' + strings[langSelector].passo4_desc1 + '</p>'+
+          '<p>' + strings[langSelector].passo4_desc2 + '</p>' +
+          '<p>' + strings[langSelector].passo4_desc3 + '</p>' +
+          '<p>' + strings[langSelector].passo4_desc4 + '</p>' +
           '<div id="lista-serviços">' +
           '</div>' +
-          '<button type="submit" class="btn" onclick="aceitarWSDLs()">Seguinte</button>'+
-          '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+          '<button type="submit" class="btn" onclick="aceitarWSDLs()">' + strings[langSelector].nxt + '</button>'+
+          '<button type="button" class="btn cancel" onclick="closeForm()">' + strings[langSelector].cancel + '</button>';
           
             totalWSDL = atividadesPublicas.length;
 
@@ -663,7 +717,7 @@
             var div = document.getElementById("lista-serviços");
 
             var para = document.createElement("p");
-            var node = document.createTextNode("Atividade " + i + ": " + atividades[i].name);
+            var node = document.createTextNode( strings[langSelector].atividade + " " + i + ": " + atividades[i].name);
             para.classList.add("nome-interface")
             para.appendChild(node);
 
@@ -677,7 +731,7 @@
             var wsdl = document.createElement("input");
             var nome = document.createElement("input");
             
-            nome.placeholder = "Nenhum arquivo selecionado";
+            nome.placeholder = strings[langSelector].no_file;
 
             var wsdlLabel = document.createElement("Label");
             var nomeLabel = document.createElement("Label");
@@ -685,8 +739,8 @@
             wsdlLabel.setAttribute("for", wsdl);
             nomeLabel.setAttribute("for", nome);
 
-            wsdlLabel.innerHTML = "Selecione um arquivo: ";
-            nomeLabel.innerHTML = "Digite um nome: ";
+            wsdlLabel.innerHTML = strings[langSelector].selecione_arq;
+            nomeLabel.innerHTML = strings[langSelector].digite_nome;
 
             wsdl.type = "file";
             wsdl.name = atividades[i].name;
@@ -785,11 +839,11 @@
         });
 
         document.getElementById('popupForm').innerHTML=
-          '<h1>Publicação Finalizada!</h1>'+
-          '<p>Pronto, seu processo foi publicado com sucesso!</p>' +
-          '<p>Para acessá-lo, utilize a coluna DESCOBERTA, busque pelo título do processo (nome utilizado no momento da publicação) e o selecione na lista. </p>' +
-          '<p>Para acessar as informações do processo, clicar duas vezes no nome do processo. Assim, você pode também baixar o XPDL e o BPDL gerado.</p>' +
-          '<button type="button" class="btn" onclick="refresh()">Finalizar</button>';
+          '<h1>' + strings[langSelector].fin_pub + '</h1>'+
+          '<p>' + strings[langSelector].fin_par1 + '</p>' +
+          '<p>' + strings[langSelector].fin_par2 + '</p>' +
+          '<p>' + strings[langSelector].fin_par3 + '</p>' +
+          '<button type="button" class="btn" onclick="refresh()">' + strings[langSelector].finish + '</button>';
 
         }
 
@@ -811,14 +865,14 @@
         var checkboxes = document.querySelectorAll('input[type=checkbox]')
 
         document.getElementById('popupForm').innerHTML=
-          '<h1>Publicação</h1>'+
-          '<h2>Passo 3: Atividades Públicas</h2>'+
-          '<p>Selecione quais atividades são publicas.</p>' +
-          '<button type="button" id="selectAll" class="main"> <span class="sub"></span>Selecionar Todos</button>' +
+          '<h1>' + strings[langSelector].pub + '</h1>'+
+          '<h2>' + strings[langSelector].passo3 + '</h2>'+
+          '<p>' + strings[langSelector].passo3_par1 + '</p>' +
+          '<button type="button" id="selectAll" class="main"> <span class="sub"></span>' + strings[langSelector].select_all + '</button>' +
           '<ul id="ul">'+
           '</ul>'+
-          '<button type="submit" class="btn" onclick="aceitarAtividadesPublicas()">Seguinte</button>'+
-          '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+          '<button type="submit" class="btn" onclick="aceitarAtividadesPublicas()">' + strings[langSelector].nxt + '</button>'+
+          '<button type="button" class="btn cancel" onclick="closeForm()">' + strings[langSelector].cancel + '</button>';
 
         var list = document.getElementById('ul');
         var negados = [];
@@ -908,14 +962,14 @@
           console.log(ativ[0].getAttribute("Id"));
 
           document.getElementById('popupForm').innerHTML=
-          '<h1>Publicação</h1>'+
-          '<h2>Passo 2: Atividades do Processo</h2>'+
-          '<p>Selecione as atividades que quer publicar</p>' +
-          '<button type="button" id="selectAll" class="main"> <span class="sub"></span>Selecionar Todos</button>' +
+          '<h1>' + strings[langSelector].pub + '</h1>'+
+          '<h2>' + strings[langSelector].passo2 + '</h2>'+
+          '<p>' + strings[langSelector].passo2_par1 + '</p>' +
+          '<button type="button" id="selectAll" class="main"> <span class="sub"></span>' + strings[langSelector].select_all + '</button>' +
           '<ul id="ul">'+
           '</ul>'+
-          '<button type="submit" class="btn" onclick="aceitarAtividades()">Seguinte</button>'+
-          '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+          '<button type="submit" class="btn" onclick="aceitarAtividades()">' + strings[langSelector].nxt + '</button>'+
+          '<button type="button" class="btn cancel" onclick="closeForm()">' + strings[langSelector].cancel + '</button>';
 
           var list = document.getElementById('ul');
           var popupForm = document.getElementById('popupForm');
@@ -979,12 +1033,12 @@
         if( inputForm.value != null){
 
           document.getElementById('popupForm').innerHTML=
-          '<h1>Publicação</h1>'+
-          '<p>Deseja publicar o seguinte .xpdl?</p>' +
+          '<h1>' + strings[langSelector].pub + '</h1>'+
+          '<p>' + strings[langSelector].pub_conf + '</p>' +
           '<p>'+ inputForm.files[0].name +'</p>'+
 
-          '<button type="submit" class="btn" onclick="aceitarXpdl()">Seguinte</button>'+
-          '<button type="button" class="btn cancel" onclick="closeForm()">Cancelar</button>';
+          '<button type="submit" class="btn" onclick="aceitarXpdl()">' + strings[langSelector].nxt + '</button>'+
+          '<button type="button" class="btn cancel" onclick="closeForm()">' + strings[langSelector].cancel + '</button>';
 
           document.getElementById("myForm").style.display = "block";
 
