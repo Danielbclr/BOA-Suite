@@ -13,6 +13,9 @@ var strings = [
 		autor: "Autor",
 		passo1_insiraVersao: "Insira a versão",
 		versao: "Versão",
+		description: "Descrição",
+		data_publi: "Data de Publicação",
+		qtd_atv: "Quantidade de Atividades",
 		passo1_insiraDesc: "Insira uma descrição",
 		nxt: "Seguinte",
 		cancel: "Cancelar",
@@ -38,7 +41,9 @@ var strings = [
 		passo2_par1: "Selecione as atividades que quer publicar",
 		pub_conf: "Deseja publicar o seguinte .xpdl?",
 		click_add: "Clique para adcionar um arquivo .xpdl",
-		submit: "Submeter"
+		submit: "Submeter",
+		procurar_processo: "Procurar processo...",
+		no_xpdl: "O Processo em questão não possui um XPDL"
 
 
 	},
@@ -54,6 +59,8 @@ var strings = [
 		titulo: "Title",
 		passo1_insiraAutor: "Insert the Author's name",
 		autor: "Author",
+		description: "Description",
+		data_publi: "Publishing Date",
 		passo1_insiraVersao: "Insert the process version",
 		versao: "Version",
 		passo1_insiraDesc: "Insert a description",
@@ -67,6 +74,7 @@ var strings = [
 		passo4_desc3: "For each file selected a new line will be added",
 		passo4_desc4: "In case a line isn't used, leave both the name and file fields empty",
 		atividade: "Activity",
+		qtd_atv: "Amount of Activities",
 		selecione_arq: "Select a File: ",
 		digite_nome: "Insert a name: ",
 		fin_pub: "Publishing finished!",
@@ -81,6 +89,9 @@ var strings = [
 		passo2_par1: "Select which activities should be published",
 		pub_conf: "Do you wish to publish this .xpdl?",
 		click_add: "Click to upload a .xpdl file",
-		submit: "Submit"
+		submit: "Submit",
+		procurar_processo: "Search Process...",
+		no_xpdl: "This process has no associated XPDL File"
+		
 	}
 ]

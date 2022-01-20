@@ -86,6 +86,19 @@
   padding: 20px;
   background-color: white;
   overflow: auto;
+  font-size: 20px;
+}
+
+.active{
+  background: #adadad;
+}
+
+.kanban-title-board{
+  font-size: 20px;
+}
+
+.kanban-item{
+  font-size: 20px;
 }
 
 .form-container input[type=file]{

@@ -18,7 +18,8 @@ function populateWithProcesses(){
                 id: "discover-item-"+i,
                 bpdl: process[i].header.bpdl,
                 process_id: process[i].header.process_id,
-                index: i
+                index: i,
+                class: "discovery-item"
             });
 
             elementos[i].addEventListener('dblclick', function(e){
@@ -52,29 +53,29 @@ function populateWithProcesses(){
                 "<h1>" + header.name + "</h1>" +
                 "<table>" +
                 "<tr>" +
-                    "<td> Autor </td>" +
+                    "<td>"+ strings[langSelector].autor +"</td>" +
                     "<td>" + header.author + "</td>" +
                 "</tr>" +
                 "<tr>" +
-                    "<td> Descrição </td>" +
+                    "<td> "+ strings[langSelector].description +" </td>" +
                     "<td>" + header.description + "</td>" +
                 "</tr>" +
                 "<tr>" +
-                    "<td> Data de Publicação </td>" +
+                    "<td> "+ strings[langSelector].data_publi +"</td>" +
                     "<td>" + header.date + "</td>" +
                 "</tr>" +
                 "<tr>" +
-                    "<td> Versão </td>" +
+                    "<td> "+ strings[langSelector].versao +" </td>" +
                     "<td>" + header.version + "</td>" +
                 "</tr>" +
                 "<tr>" +
-                    "<td> Quantidade de Atividades </td>" +
+                    "<td>"+ strings[langSelector].qtd_atv +"</td>" +
                     "<td>" + ativ.length + "</td>" +
                 "</tr>" +
                 "</table>" +
-                '<button type="button" class="btn" onclick="baixarBPDL(\'' + bpdl + '\')">Baixar BPDL</button>'+
-                '<button type="button" class="btn" onclick="baixarXPDL(\'' + xpdl + '\')">Baixar XPDL</button>'+
-                '<button type="button" class="btn cancel" onclick="closeHeaderForm()">Cancelar</button>';
+                '<button type="button" class="btn" onclick="baixarBPDL(\'' + bpdl + '\')">Download BPDL</button>'+
+                '<button type="button" class="btn" onclick="baixarXPDL(\'' + xpdl + '\')">Download XPDL</button>'+
+                '<button type="button" class="btn cancel" onclick="closeHeaderForm()">'+ strings[langSelector].cancel +'</button>';
 
                 headerDiv.style.display = "block";
 
@@ -110,7 +111,7 @@ function baixarXPDL(xpdl){
     console.log(xpdl);
 
     if( xpdl == "undefined" ){
-        alert("O Processo em questão não possui um XPDL"); 
+        alert(string[langSelector].no_xpdl); 
         return;
     }
 

@@ -1,0 +1,28 @@
+<Processo>
+    <ProcessoInfo>
+        <Nome>Health Services</Nome>
+        <Autor>asd</Autor>
+        <Versão>1.0</Versão>
+        <Data>19/1/2022 @ 20:40:33</Data>
+        <Descrição>asd</Descrição>
+        <Xpdl>Modelo Saúde-2.xpdl</Xpdl>
+    </ProcessoInfo>
+    <Atividades>
+        <Atividade nome="Search Hospitals" id="003f940c-8d26-4edc-aa4b-e82633a8b4d5" público="false"/>
+        <Atividade nome="Low Risk" id="579844cf-9423-4c0a-8459-e804c68cda80" público="false"/>
+        <Atividade nome="Medium Risk" id="ca16d2c9-0eca-453d-a2ce-7473385b0400" público="false"/>
+        <Atividade nome="High Risk" id="fbd8bb62-5035-4372-8f50-091d481ba6a7" público="false"/>
+        <Atividade nome="Process Result" id="e0a6570c-0e83-4ebe-b791-8214fff36720" público="false"/>
+        <Atividade nome="Search Hospital" id="8b95a023-a7a4-4ddd-a028-68966b3901b9" público="true">
+            <Wsdl nome="Mass General Hospital">CreditSPC.wsdl</Wsdl>
+            <Wsdl nome="New England Baptist Hospital">DeliverDhl.wsdl</Wsdl>
+        </Atividade>
+        <Atividade nome="Level of Hospitalization" id="b5141941-7e3e-45e0-be38-28f1d9db70f4" público="false"/>
+        <Atividade nome="Outpatient Level" id="5554b605-dde1-4d84-8ef7-f142550b4209" público="false"/>
+        <Atividade nome="Search Clinic" id="37f44bd3-1c89-411f-87d0-93e886103262" público="true">
+            <Wsdl nome="Quest Diagnostics">DeliverDhl.wsdl</Wsdl>
+            <Wsdl nome="Boston Medical Center">DeliverDhl.wsdl</Wsdl>
+        </Atividade>
+        <Atividade nome="Analyze Result" id="dafc0e9b-63be-427e-bf09-bcf3211ecc74" público="false"/>
+    </Atividades>
+</Processo>
